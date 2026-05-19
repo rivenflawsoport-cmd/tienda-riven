@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Mobile Legends VIP</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #000; color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        .font-impact { font-family: 'Montserrat', sans-serif; }
+        
+        .bg-ml { 
+            position: fixed; 
+            inset: 0; 
+            background-image: linear-gradient(rgba(0, 15, 0, 0.88), rgba(0, 0, 0, 0.92)), url('img/fondo_ml.webp'); 
+            background-size: cover; 
+            background-position: center center; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: -10;
+        }
+
+        @keyframes goldPulse {
+            0% { box-shadow: 0 0 2px #fbbf24; border-color: #fbbf24; }
+            50% { box-shadow: 0 0 15px #fbbf24; border-color: #fff; }
+            100% { box-shadow: 0 0 2px #fbbf24; border-color: #fbbf24; }
+        }
+        .card-recommended { animation: goldPulse 2s infinite ease-in-out; border: 1.5px solid #fbbf24 !important; }
+
+        /* CORRECCIÓN DE GRID: 2 COLUMNAS EN CELULAR SIEMPRE */
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            padding: 15px 10px 30px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        @media (min-width: 640px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; } }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(6, 1fr); } }
+        
+        .product-card { 
+            background: rgba(15, 23, 42, 0.8); 
+            border-radius: 12px; 
+            border: 1px solid rgba(59, 130, 246, 0.2); 
+            position: relative; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column;
+            /* Altura fija para que no se deformen entre sí */
+            min-height: 260px;
+            overflow: visible; 
+            margin-top: 10px;
+        }
+        .product-card:hover { 
+            transform: translateY(-5px);
+            border-color: #66ff00 !important;
+            box-shadow: 0 0 20px rgba(102, 255, 0, 0.3);
+        }
+
+        .img-box { 
+            width: 100%; 
+            height: 160px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: rgba(0,0,0,0.3); 
+            overflow: hidden; 
+            border-radius: 12px 12px 0 0;
+        }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .product-info { 
+            flex-grow: 1;
+            padding: 8px 5px; 
+            text-align: center; 
+            background: rgba(13, 27, 14, 0.8); 
+            border-radius: 0 0 12px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 4px;
+        }
+        .product-name { 
+            font-weight: 800; 
+            font-size: 13px; 
+            color: #ffffff; 
+            text-transform: uppercase; 
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.2;
+            height: 32px; /* Espacio para 2 líneas de texto */
+        }
+        .product-price { 
+            color: #2bff00; 
+            font-weight: 900; 
+            font-size: 1.1rem; 
+            font-family: 'Montserrat', sans-serif; 
+            font-style: italic;
+        }
+
+        .btn-buy {
+            background: #66ff00;
+            color: #000;
+            font-size: 12px;
+            font-weight: 900;
+            padding: 6px 0;
+            border-radius: 6px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .card-recommended .btn-buy { background: #fbbf24; }
+
+        .section-separator { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 15px 15px; 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 900; 
+            font-style: italic; 
+            color: #66ff00; 
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+        }
+
+        .section-separator::before, .section-separator::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #66ff00, transparent);
+        }
+
+        .badge-rec { 
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%); 
+            background: #fbbf24; color: #000; font-family: 'Montserrat', sans-serif; 
+            font-weight: 900; font-size: 10px; padding: 3px 8px; border-radius: 4px; z-index: 50; 
+            white-space: nowrap; border: 1px solid white;
+        }
+        
+        .badge-agotado { position: absolute; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; color: #ff4d4d; font-weight: 900; font-size: 11px; z-index: 20; text-transform: uppercase; border-radius: 12px; }
+
+        .user-nav { background: rgba(0, 15, 0, 0.95); border-bottom: 2px solid #66ff00; padding: 10px; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
+        .modal-box { background: #0f172a; border: 2px solid #66ff00; padding: 25px; border-radius: 20px; max-width: 360px; width: 100%; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-ml"></div>
+
+    <nav class="user-nav">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-2">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="text-white hover:text-[#66ff00] transition-colors flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span class="text-[13px] font-bold uppercase italic">Volver</span>
+                </a>
+                <div class="flex flex-col border-l border-gray-700 pl-2">
+                    <span id="nav-name" class="text-[10px] font-bold text-gray-400 uppercase leading-none">Verificando...</span>
+                    <span id="nav-saldo" class="text-xs font-black text-[#66ff00]">S/ 0.00</span>
+                </div>
+            </div>
+            <div class="text-right">
+                <span id="nav-puntos" class="text-[13px] font-black text-[#fbbf24] block leading-none">⭐️ 0 PTS</span>
+                <a href="recompensas.html" class="text-[12px] text-white underline font-bold uppercase">Premios</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-6 text-center">
+        <h1 class="font-impact italic text-3xl text-white uppercase tracking-tighter">MOBILE <span class="text-[#66ff00]">LEGENDS</span></h1>
+    </header>
+
+    <div id="catalog-content"></div>
+
+    <div id="modal-datos" class="modal-overlay"><div class="modal-box">
+        <h3 class="text-[#66ff00] font-impact italic text-xl mb-4 uppercase">DATOS DE CUENTA</h3>
+        <input type="number" id="ml-id" placeholder="ID DE USUARIO" class="w-full p-3 mb-2 bg-black border border-gray-700 rounded-xl text-center text-white font-bold outline-none text-sm">
+        <input type="number" id="ml-server" placeholder="SERVER" class="w-full p-3 bg-black border border-gray-700 rounded-xl text-center text-white font-bold outline-none text-sm">
+        <input type="text" id="guest-code" placeholder="CÓDIGO DE INVITADO (OPCIONAL)" class="w-full p-3 mt-2 bg-black border border-gray-700 rounded-xl text-center text-[#66ff00] font-bold outline-none text-sm uppercase tracking-wider">
+        
+        <div class="mt-4 flex items-center justify-center gap-2">
+            <input type="checkbox" id="check-terminos" class="w-4 h-4 accent-[#66ff00]">
+            <label for="check-terminos" class="text-[10px] font-bold uppercase text-gray-400">Acepto los <a href="terminos.html" class="text-[#66ff00] underline">Términos y Condiciones</a></label>
+        </div>
+
+        <div class="flex gap-2 mt-5">
+            <button onclick="cerrarModales()" class="flex-1 bg-gray-800 text-white p-3 rounded-xl font-bold text-[10px] uppercase">Cerrar</button>
+            <button onclick="irAMetodo()" class="flex-1 bg-[#fbbf24] text-white p-3 rounded-xl font-bold text-[15px] uppercase">Siguiente</button>
+        </div>
+    </div></div>
+
+    <div id="modal-metodo" class="modal-overlay">
+        <div class="modal-box" style="border-color: #25d366;"> <h3 class="text-[#26d366] font-impact italic text-xl mb-2 uppercase">FINALIZAR COMPRA</h3>
+            <p id="metodo-info" class="text-[15px] text-gray-400 mb-5 uppercase font-bold"></p>
+            
+            <button onclick="finalizarWhatsApp('PAGO QR / WHATSAPP')" class="w-full bg-[#25d366] text-white p-4 rounded-xl font-black text-sm uppercase flex items-center justify-center gap-2 mb-3 shadow-lg hover:scale-105 transition-transform">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.93 0c3.165.001 6.14 1.233 8.377 3.469 2.237 2.236 3.467 5.21 3.466 8.377-.003 6.582-5.338 11.93-11.87 11.93a11.85 11.85 0 0 1-5.694-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.725 1.451 5.416 0 9.825-4.41 9.829-9.829.001-2.624-1.022-5.09-2.885-6.954C16.425 1.958 13.957 1.954 11.93 1.954c-5.417 0-9.829 4.41-9.832 9.83-.001 1.84.482 3.633 1.4 5.2l-1.02 3.722 3.812-1l.357.212z"/>
+                </svg>
+                YAPE / PLIN POR WHATSAPP
+            </button>
+
+            <button onclick="pagarConSaldo()" class="w-full bg-neutral-900 border border-gray-800 text-gray-400 p-3 rounded-xl font-bold text-xs uppercase flex justify-between items-center opacity-80 hover:opacity-100 transition-opacity">
+                <span>Pagar con Saldo Riven</span>
+                <span id="modal-saldo-check" class="text-[#66ff00]">S/ 0.00</span>
+            </button>
+
+            <button onclick="cerrarModales()" class="mt-5 text-gray-500 text-[12px] uppercase font-bold tracking-wider hover:text-white block mx-auto">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="modal-qr" class="modal-overlay"><div class="modal-box">
+        <h3 class="text-[#66ff00] font-impact italic text-lg mb-2 uppercase">PAGA AQUÍ</h3>
+        <img src="img/qr_yape.webp" class="w-52 h-52 mx-auto mb-4 border-2 border-[#66ff00] rounded-2xl">
+        <button onclick="finalizarWhatsApp('PAGO QR')" class="w-full bg-[#25d366] text-white p-4 rounded-xl font-black text-xs uppercase">YA PAGUÉ, ENVIAR CAPTURA</button>
+        <button onclick="cerrarModales()" class="mt-4 text-gray-500 text-[10px] underline uppercase">Cerrar</button>
+    </div></div>
+
+    <footer class="py-12 text-center">
+        <a href="terminos.html" class="text-gray-600 text-[11px] font-bold uppercase border-b border-gray-800 pb-1">Términos y Condiciones</a>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", authDomain: "rivenflawstore.firebaseapp.com", projectId: "rivenflawstore", storageBucket: "rivenflawstore.firebasestorage.app", messagingSenderId: "251566538187", appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let userSaldo = 0, userPoints = 0, userId = "", userName = "", itemActual = "", precioActual = 0;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                const docSnap = await getDoc(doc(db, "usuarios", userId));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    userSaldo = parseFloat(data.saldo || 0);
+                    userPoints = parseInt(data.puntos || 0);
+                    userName = data.nombre || "Gamer";
+                    updateUI();
+                }
+            } else { 
+                document.getElementById('nav-name').innerText = "HOLA, INVITADO";
+                document.getElementById('nav-saldo').innerText = "S/ 0.00";
+            }
+        });
+
+        function updateUI() {
+            document.getElementById('nav-name').innerText = `HOLA, ${userName.split(' ')[0]}`;
+            document.getElementById('nav-saldo').innerText = `S/ ${userSaldo.toFixed(2)}`;
+            document.getElementById('nav-puntos').innerText = `⭐️ ${userPoints} PTS`;
+            document.getElementById('modal-saldo-check').innerText = `S/ ${userSaldo.toFixed(2)}`;
+        }
+
+        const secciones = [
+            { titulo: "PASES", items: [
+                {n: "Paquete Semanal Elite", p: 2.87, img: "a.webp"},
+                {n: "Pase Semanal", p: 6.08, r: true, img: "b.webp"},
+                {n: "Paquete Mensual Epico", p: 14.21, img: "c.webp"},
+                {n: "Pase Crepúscular", p: 31.40, img: "d.webp"},
+                {n: "Pase de Gran Valor", p: 3.50, agotado: true, img: "e.webp"}
+            ]},
+            { titulo: "BONO DOBLE RECOMPENSA", items: [
+                {n: "50+50 💎", p: 3.01, img: "f.webp"},
+                {n: "150+150 💎", p: 9.01, img: "g.webp"},
+                {n: "250+250 💎", p: 15.00, img: "h.webp"},
+                {n: "500+500 💎", p: 30.46, img: "i.webp"}
+            ]},
+            { titulo: "DIAMANTES", items: [
+                {n: "55💎", p: 3.32, img: "j.webp"}, {n: "86💎", p: 4.75, img: "k.webp"}, {n: "165💎", p: 9.01, r: true, img: "l.webp"},
+                {n: "172💎", p: 9.51, img: "m.webp"}, {n: "257💎", p: 14.20, img: "n.webp"}, {n: "275💎", p: 15.49, r: true, img: "o.webp"},
+                {n: "330💎", p: 18.02, r: true, img: "p.webp"}, {n: "337💎", p: 18.48, img: "q.webp"}, {n: "343💎", p: 18.79, img: "r.webp"},
+                {n: "429💎", p: 24.21, img: "s.webp"}, {n: "440💎", p: 24.48, img: "t.webp"}, {n: "550💎", p: 30.98, r: true, img: "u.webp"},
+                {n: "565💎", p: 31.20, r: true, img: "v.webp"}, {n: "706💎", p: 38.10, img: "w.webp"}, {n: "730💎", p: 39.10, r: true, img: "x.webp"},
+                {n: "840💎", p: 46.69, r: true, img: "y.webp"}, {n: "963💎", p: 53.00, img: "z.webp"}, {n: "981💎", p: 53.59, img: "aa.webp"},
+                {n: "1130💎", p: 62.15, img: "bb.webp"}, {n: "1271💎", p: 69.30, r: true, img: "cc.webp"}, {n: "1412💎", p: 76.29, img: "dd.webp"},
+                {n: "2195💎", p: 114.20, img: "ee.webp"}, {n: "3688💎", p: 190.39, img: "ff.webp"}, {n: "4390💎", p: 235.54, img: "gg.webp"},
+                {n: "5532💎", p: 296.64, img: "hh.webp"}, {n: "6585💎", p: 352.54, img: "ii.webp"}, {n: "9288💎", p: 475.22, img: "jj.webp"}
+            ]}
+        ];
+
+        window.renderCatalog = () => {
+            const container = document.getElementById('catalog-content');
+            container.innerHTML = secciones.map(sec => `
+                <div class="section-separator">${sec.titulo}</div>
+                <div class="product-grid">
+                    ${sec.items.map(item => `
+                        <div class="product-card ${item.r ? 'card-recommended' : ''}" onclick="${item.agotado ? '' : `abrirDatos('${item.n}', ${item.p})`}">
+                            ${item.r ? '<span class="badge-rec">RECOMENDADO</span>' : ''}
+                            ${item.agotado ? '<div class="badge-agotado">AGOTADO</div>' : ''}
+                            <div class="img-box"><img src="img/mlbb/${item.img}" onerror="this.src='img/mlbb/default.webp'"></div>
+                            <div class="product-info">
+                                <h3 class="product-name">${item.n}</h3>
+                                <p class="product-price">S/ ${item.p.toFixed(2)}</p>
+                                <div class="btn-buy">${item.agotado ? 'NO DISPONIBLE' : 'ADQUIRIR'}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+        renderCatalog();
+
+        window.abrirDatos = (n, p) => { itemActual = n; precioActual = p; document.getElementById('modal-datos').style.display = 'flex'; };
+        window.cerrarModales = () => { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); };
+        
+        window.irAMetodo = () => { 
+            const id = document.getElementById('ml-id').value;
+            const srv = document.getElementById('ml-server').value;
+            const check = document.getElementById('check-terminos').checked;
+            
+            if(!id || !srv) return alert("Por favor ingresa tu ID y Server");
+            if(!check) return alert("Debes aceptar los términos y condiciones");
+
+            // Coloca el nombre del paquete y precio arriba en el modal
+            document.getElementById('metodo-info').innerText = `${itemActual} - S/ ${precioActual.toFixed(2)}`;
+            
+            // Cierra el de datos y abre directo el de WhatsApp / Saldo
+            document.getElementById('modal-datos').style.display = 'none'; 
+            document.getElementById('modal-metodo').style.display = 'flex'; 
+        };
+
+        window.mostrarQR = () => { document.getElementById('modal-metodo').style.display = 'none'; document.getElementById('modal-qr').style.display = 'flex'; };
+        
+        window.pagarConSaldo = async () => {
+            if (userSaldo < precioActual) return alert("Saldo insuficiente");
+            if (confirm("¿Confirmar pago con Saldo Riven?")) {
+                const id = document.getElementById('ml-id').value;
+                const srv = document.getElementById('ml-server').value;
+                const gCode = document.getElementById('guest-code').value.trim().toUpperCase() || "NINGUNO";
+                
+                try {
+                    await updateDoc(doc(db, "usuarios", userId), { 
+                        saldo: increment(-precioActual), 
+                        puntos: increment(Math.floor(precioActual)) 
+                    });
+                    
+                    // CÓDIGO CORREGIDO PARA VINCULAR CON EL HISTORIAL
+await addDoc(collection(db, "pedidos"), { 
+    cliente_uid: userId, 
+    cliente_nombre: userName, 
+    producto: `MLBB: ${itemActual} (SALDO WEB)`, 
+    monto: precioActual, 
+    precio: precioActual, 
+    player_id: `${document.getElementById('ml-id').value} (${document.getElementById('ml-server').value})`, 
+    id_jugador: document.getElementById('ml-id').value,
+    server: document.getElementById('ml-server').value, 
+    metodo: "Saldo Riven", 
+    codigo_invitado: gCode,
+    fecha: serverTimestamp(), 
+    fecha_hora: new Date().toLocaleString(), 
+    estado: "pendiente" 
+});
+                    
+                    alert("PROCESANDO PEDIDO... Tu compra se ha registrado correctamente.");
+                    cerrarModales();
+                    location.reload(); 
+                } catch (error) {
+                    alert("Error al procesar el pedido. Intenta de nuevo.");
+                }
+            }
+        };
+
+        window.finalizarWhatsApp = async (met) => {
+    const id = document.getElementById('ml-id').value;
+    const srv = document.getElementById('ml-server').value;
+    const gCode = document.getElementById('guest-code').value.trim().toUpperCase() || "NINGUNO";
+    
+    // Guardamos el respaldo en la colección de la base de datos para admin.html
+    try {
+        await addDoc(collection(db, "pedidos"), { 
+            cliente_uid: userId || "invitado", 
+            cliente_nombre: userName || "Invitado", 
+            producto: `MLBB: ${itemActual} (WHATSAPP / YAPE)`, 
+            monto: precioActual, 
+            precio: precioActual, 
+            player_id: `${id} (${srv})`, 
+            id_jugador: id,
+            server: srv, 
+            metodo: met, 
+            codigo_invitado: gCode,
+            fecha: serverTimestamp(), 
+            fecha_hora: new Date().toLocaleString(), 
+            estado: "pendiente" 
+        });
+    } catch (error) { 
+        console.error("Error al respaldar pedido:", error); 
+    }
+
+    // Enviamos el mensaje de WhatsApp idéntico al tuyo
+    const msg = `*COMPRA RIVEN FLAW*\n👤 ${userName}\n⚔️ ${itemActual}\n💰 S/ ${precioActual}\n🆔 ${id} (${srv})\n👥 INVITADO: ${gCode}\n💳 ${met}`;
+    window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+};
+    </script>
+</body>
+</html>

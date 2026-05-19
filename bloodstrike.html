@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Blood Strike Elite Store</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --crimson: #990000; --obsidian: #050505; }
+        body { font-family: 'Rajdhani', sans-serif; background-color: var(--obsidian); color: white; margin: 0; padding: 0; overflow-x: hidden; }
+
+        /* FONDO DINÁMICO RIVEN FLAW */
+        .riven-bg { 
+            position: fixed; inset: 0; 
+            background: linear-gradient(rgba(5, 5, 5, 0.85), rgba(0, 0, 0, 0.95)), url('img/bloodstrike/fondo.webp'); 
+            background-size: cover; background-position: center; z-index: -20;
+            animation: kenBurns 40s infinite alternate ease-in-out;
+        }
+        @keyframes kenBurns { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+        /* NAVBAR HÍBRIDA COMPLETA (CON TODO LO QUE ME PEDISTE) */
+        .nav-master {
+            background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid var(--gold);
+            position: sticky; top: 0; width: 100%; z-index: 1000;
+            backdrop-filter: blur(20px); height: 85px; display: flex; align-items: center;
+        }
+
+        .rango-oro { color: #ffd700 !important; text-shadow: 0 0 15px rgba(255,215,0,0.8); font-weight: 800; }
+        .btn-charge-top { background: #25d366; color: white; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 900; text-transform: uppercase; box-shadow: 0 0 15px rgba(37, 211, 102, 0.3); }
+
+        /* LAYOUT ESTILO BONOXS */
+        .main-wrapper { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 40px; }
+        
+        .left-col { width: 350px; flex-shrink: 0; }
+        .right-col { flex: 1; min-width: 320px; }
+        @media (max-width: 1024px) { .left-col { width: 100%; } }
+
+        .game-card-main { border-radius: 20px; border: 1px solid #222; overflow: hidden; background: #0a0a0a; }
+        .game-card-main img { width: 100%; height: auto; display: block; }
+
+        /* SELECTOR DE PRODUCTOS (SIN IMÁGENES QUE FALLEN) */
+        .selector-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+        @media (min-width: 640px) { .selector-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .opt-box {
+            background: #111; border: 1px solid #333; border-radius: 12px;
+            padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .opt-box:hover { border-color: var(--gold); background: #161616; transform: translateY(-3px); }
+        .opt-box.active { border: 2px solid var(--gold); background: #1a1a1a; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+
+        .opt-n { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; }
+        .opt-p { font-size: 15px; font-weight: 900; color: #fff; margin-top: 4px; }
+
+        /* ÁREA DE PAGO DINÁMICA */
+        .checkout-box { 
+            margin-top: 40px; padding: 30px; background: rgba(15, 15, 15, 0.95); 
+            border-radius: 20px; border: 1px solid #222; border-top: 4px solid var(--gold);
+        }
+        .price-big { font-size: 45px; font-weight: 900; color: var(--gold); font-family: 'Montserrat', sans-serif; }
+        
+        .input-riven { width: 100%; background: #000; border: 1px solid #333; padding: 16px; rounded: 12px; color: white; font-weight: 800; font-size: 18px; margin-bottom: 20px; outline: none; }
+        .input-riven:focus { border-color: var(--gold); }
+
+        .btn-riven-pay { 
+            width: 100%; background: var(--gold); color: black; padding: 20px; 
+            border-radius: 15px; font-weight: 900; text-transform: uppercase; 
+            font-size: 16px; box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+        .btn-riven-pay:disabled { opacity: 0.2; cursor: not-allowed; }
+
+        /* MODAL DE CONFIRMACIÓN */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-riven { background: #0a0a0a; border: 2px solid var(--gold); border-radius: 25px; max-width: 380px; width: 100%; padding: 40px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="riven-bg"></div>
+
+    <!-- NAVBAR COMPLETA (IDENTIDAD RIVEN FLAW) -->
+    <nav class="nav-master">
+        <div class="max-w-7xl mx-auto w-full px-6 flex justify-between items-center">
+            <div class="flex items-center gap-5">
+                <a href="index.html" class="text-[11px] font-black border-2 border-gray-800 px-6 py-2 rounded-full text-gray-400 uppercase tracking-widest">Volver</a>
+                <div id="m-info" class="hidden flex flex-col">
+                    <span id="u-name" class="text-sm font-black uppercase italic leading-none"></span>
+                    <div class="flex gap-4 mt-1">
+                        <a href="historial.html" class="text-[10px] text-gray-500 font-bold underline">🕒 MI HISTORIAL</a>
+                        <a href="recompensas.html" class="text-[10px] text-red-600 font-black underline">🎁 RECOMPENSAS</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right flex flex-col items-end">
+                <div id="g-view" class="text-[11px] font-black text-gray-700 uppercase italic">Hola, Invitado</div>
+                <div id="m-view" class="hidden flex flex-col items-end">
+                    <span id="u-balance" class="text-2xl font-black text-red-700 leading-none">S/ 0.00</span>
+                    <div class="flex items-center gap-3 mt-1">
+                        <span id="u-points" class="text-[11px] font-black text-yellow-600">0 PUNTOS ⭐</span>
+                        <a href="https://wa.me/51940511991" class="btn-charge-top">RECARGAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <!-- COLUMNA IZQUIERDA: IMAGEN PRINCIPAL -->
+       <div class="left-col">
+    <div class="game-card-main">
+        <!-- CAMBIA "fondo.jpg" POR "portada.jpg" AQUÍ -->
+        <img src="img/bloodstrike/portada.webp" alt="Blood Strike" onerror="this.src='https://placehold.co/400x600/111/d4af37?text=BLOOD+STRIKE'">
+        <div class="p-6 bg-black">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-[#d4af37] text-black text-[10px] font-black px-2 py-1 rounded">OFICIAL</span>
+                        <span class="border border-gray-800 text-gray-500 text-[10px] font-bold px-2 py-1 rounded">PERÚ</span>
+                    </div>
+                    <p class="text-xs text-gray-400 font-medium leading-relaxed">
+                        Recarga Oro de Blood Strike de forma instantánea. Los puntos estrella se sumarán a tu cuenta Riven Flaw automáticamente.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: SELECTOR DE ORO Y PASES -->
+        <div class="right-col">
+            <h1 class="text-5xl font-black italic uppercase text-white mb-2">BLOOD <span class="text-[#d4af37]">STRIKE</span></h1>
+            <p class="text-[11px] text-gray-500 font-bold tracking-[6px] uppercase mb-10">Elite Recharge Service</p>
+
+            <h2 class="text-xs font-black text-[#d4af37] uppercase tracking-widest mb-4">1. Selecciona tu paquete</h2>
+            <div id="selector" class="selector-grid"></div>
+
+            <div class="checkout-box">
+                <h2 class="text-xs font-black text-gray-500 uppercase tracking-widest mb-6">2. Confirmar datos y pago</h2>
+                <input type="text" id="player-id" placeholder="ID DEL JUGADOR" class="input-riven uppercase">
+                
+                <div class="flex items-center gap-3 mb-8">
+                    <input type="checkbox" id="t-check" style="width:20px; height:20px; accent-color:#d4af37;">
+                    <label for="t-check" class="text-[11px] font-bold text-gray-500 uppercase">He leído los <a href="terminos.html" class="text-[#d4af37] underline">términos y condiciones</a></label>
+                </div>
+
+                <div class="border-t border-gray-800 pt-8">
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p id="sel-item-name" class="text-[11px] font-black text-gray-600 uppercase">Ningún producto seleccionado</p>
+                            <p class="text-[10px] font-bold text-gray-400 uppercase mt-1">Precio final impuestos incluidos</p>
+                        </div>
+                        <div id="final-price" class="price-big">S/ 0.00</div>
+                    </div>
+                    <button id="btn-pay" onclick="openModPay()" class="btn-riven-pay mt-8" disabled>Comprar Ahora</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE PAGO -->
+    <div id="m-pay" class="modal-overlay" onclick="if(event.target.id === 'm-pay') closeAll()">
+        <div class="modal-riven">
+            <h3 class="text-[#d4af37] font-black text-2xl mb-2 uppercase italic">Finalizar</h3>
+            <p id="confirm-info" class="text-gray-500 text-[11px] font-bold uppercase mb-8"></p>
+            <button onclick="finishSaldo()" class="w-full bg-red-700 text-white p-5 rounded-2xl font-black text-xs uppercase mb-3 shadow-xl">Pagar con Saldo Riven</button>
+            <button onclick="finishWA()" class="w-full bg-[#25d366] text-white p-5 rounded-2xl font-black text-xs uppercase shadow-xl">WhatsApp / Yape</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const cfg = { apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", authDomain: "rivenflawstore.firebaseapp.com", projectId: "rivenflawstore", storageBucket: "rivenflawstore.firebasestorage.app", messagingSenderId: "251566538187", appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" };
+        const app = initializeApp(cfg);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let uS = 0, uN = "Invitado", uI = "", sN = "", sP = 0, lock = false;
+
+        const items = [
+            {n:"51 Oro", p:1.59}, {n:"105 Oro", p:2.99}, {n:"320 Oro", p:8.99}, {n:"540 Oro", p:14.99},
+            {n:"591 Oro", p:16.59}, {n:"860 Oro", p:23.99}, {n:"1100 Oro", p:29.99}, {n:"1205 Oro", p:32.50},
+            {n:"1420 Oro", p:38.50}, {n:"1640 Oro", p:43.99}, {n:"2260 Oro", p:59.99}, {n:"2800 Oro", p:73.98},
+            {n:"3360 Oro", p:88.99}, {n:"4520 Oro", p:117.98}, {n:"5800 Oro", p:139.51}, {n:"6900 Oro", p:167.59},
+            {n:"8060 Oro", p:196.51}, {n:"11600 Oro", p:293.51}, {n:"17400 Oro", p:410.11},
+            {n:"Level Up Pass", p:6.9}, {n:"S. Pass Elite", p:13}, {n:"S. Pass Premium", p:29},
+            {n:"Lucky Chest", p:2.02}, {n:"L. Bag Week", p:3.5}
+        ];
+
+        window.draw = () => {
+            document.getElementById('selector').innerHTML = items.map((i, index) => `
+                <div class="opt-box" id="opt-${index}" onclick="select('${i.n}', ${i.p}, ${index})">
+                    <span class="opt-n">${i.n}</span>
+                    <span class="opt-p">S/ ${i.p.toFixed(2)}</span>
+                </div>
+            `).join('');
+        };
+
+        window.select = (n, p, idx) => {
+            sN = n; sP = p;
+            document.querySelectorAll('.opt-box').forEach(b => b.classList.remove('active'));
+            document.getElementById(`opt-${idx}`).classList.add('active');
+            document.getElementById('final-price').innerText = `S/ ${p.toFixed(2)}`;
+            document.getElementById('sel-item-name').innerText = n;
+            document.getElementById('btn-pay').disabled = false;
+        };
+
+        window.openModPay = () => {
+            if(!document.getElementById('player-id').value) return alert("¡Ingresa tu ID de jugador!");
+            if(!document.getElementById('t-check').checked) return alert("Debes aceptar los términos.");
+            document.getElementById('confirm-info').innerText = `${sN} | TOTAL: S/ ${sP.toFixed(2)}`;
+            document.getElementById('m-pay').style.display = 'flex';
+        };
+
+        window.closeAll = () => { document.getElementById('m-pay').style.display = 'none'; };
+
+        window.finishSaldo = async () => {
+            if(lock || uS < sP) return alert("Saldo insuficiente.");
+            if(confirm(`¿Confirmas el pago de S/ ${sP.toFixed(2)}?`)) {
+                try {
+                    lock = true;
+                    await updateDoc(doc(db, "usuarios", uI), { saldo: increment(-sP), puntos: increment(Math.floor(sP)) });
+                    await addDoc(collection(db, "pedidos"), { 
+    cliente_uid: uI, 
+    player_id: document.getElementById('player-id').value.toUpperCase(), 
+    producto: `BS: ${sN}`, 
+    monto: sP, 
+    precio: sP, 
+    cliente_nombre: uN, 
+    fecha: serverTimestamp(), 
+    fecha_hora: new Date().toLocaleString(), 
+    estado: "pendiente" 
+}); // Asegúrate de que la llave y el paréntesis cierren AQUÍ al final.
+                    alert("¡ÉXITO! Recibirás tus puntos estrella."); location.reload();
+                } catch (e) { lock = false; }
+            }
+        };
+
+        window.finishWA = () => {
+            const msg = `*BLOOD STRIKE - RIVEN FLAW*\n💎 ITEM: ${sN}\n🆔 ID: ${document.getElementById('player-id').value.toUpperCase()}\n👤 CLIENTE: ${uN}\n💰 PAGO: S/ ${sP.toFixed(2)}`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+
+        onAuthStateChanged(auth, async (u) => {
+            if (u) {
+                uI = u.uid;
+                const snap = await getDoc(doc(db, "usuarios", uI));
+                if (snap.exists()) {
+                    const d = snap.data(); uS = d.saldo || 0; uN = d.nombre || "Socio";
+                    document.getElementById('u-name').innerText = `HOLA, ${uN.split(' ')[0].toUpperCase()}`;
+                    if((d.puntos || 0) > 100) document.getElementById('u-name').classList.add('rango-oro');
+                    document.getElementById('u-balance').innerText = `S/ ${uS.toFixed(2)}`;
+                    document.getElementById('u-points').innerText = `${d.puntos || 0} PUNTOS ⭐`;
+                    document.getElementById('g-view').classList.add('hidden');
+                    document.getElementById('m-view').classList.remove('hidden');
+                    document.getElementById('m-info').classList.remove('hidden');
+                }
+            } draw();
+        });
+    </script>
+</body>
+</html>

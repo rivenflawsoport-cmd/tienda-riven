@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Delta Force Elite Store</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --bg-dark: #05070a; }
+        body { font-family: 'Rajdhani', sans-serif; background-color: var(--bg-dark); color: white; margin: 0; padding: 0; overflow-x: hidden; }
+
+        /* FONDO DINÁMICO TOTAL */
+        .main-bg { 
+            position: fixed; inset: 0; 
+            background: linear-gradient(rgba(5, 7, 10, 0.8), rgba(0, 0, 0, 0.95)), url('img/deltaforce/fondo.jpg'); 
+            background-size: cover; background-position: center; z-index: -20;
+            animation: kenBurns 30s infinite alternate ease-in-out;
+        }
+        @keyframes kenBurns { from { transform: scale(1); } to { transform: scale(1.15); } }
+
+        /* BARRA DE USUARIO HÍBRIDA (RESIGNIFICADA) */
+        .nav-riven {
+            background: rgba(0, 0, 0, 0.9); border-bottom: 2px solid var(--gold);
+            position: sticky; top: 0; width: 100%; z-index: 1000;
+            backdrop-filter: blur(15px); height: 75px; display: flex; align-items: center;
+        }
+
+        .user-pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.2); padding: 5px 12px; border-radius: 12px; }
+        .rango-oro { color: #ffd700 !important; text-shadow: 0 0 15px rgba(255,215,0,0.8); font-weight: 800; }
+        
+        /* BOTÓN RECARGA NEÓN */
+        .btn-charge {
+            background: #25d366; color: white; padding: 4px 10px; border-radius: 6px;
+            font-size: 10px; font-weight: 900; text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        }
+
+        /* GRID OPTIMIZADO: 4 COLUMNAS MÓVIL | 6 PC */
+        .delta-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 8px; padding: 10px; max-width: 1300px; margin: 0 auto; 
+        }
+        @media (min-width: 1024px) { 
+            .delta-grid { grid-template-columns: repeat(6, 1fr); gap: 20px; padding: 30px; } 
+        }
+
+        /* TARJETA DE PRODUCTO "PREMIUM" */
+        .coin-card { 
+            background: rgba(15, 20, 30, 0.98); border-radius: 12px; 
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative; overflow: hidden; transition: 0.3s;
+            display: flex; flex-direction: column; height: 100%;
+        }
+        .coin-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 0 20px rgba(212,175,55,0.3); }
+
+        /* NOMBRES Y PRECIOS VISIBLES */
+        .coin-header { background: var(--gold); color: black; font-weight: 800; font-size: 9px; text-align: center; padding: 3px 0; text-transform: uppercase; }
+        .coin-img-container { padding: 5px; position: relative; flex-grow: 1; }
+        .coin-img-container img { width: 100%; height: auto; object-fit: contain; }
+
+        .price-tag { background: rgba(0,0,0,0.8); color: var(--gold); font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 11px; padding: 4px 0; text-align: center; }
+        .btn-buy-now { background: var(--gold); color: black; font-weight: 900; font-size: 10px; padding: 8px 0; border: none; width: 100%; text-transform: uppercase; cursor: pointer; }
+
+        /* SECCIÓN PREMIOS (RULETA VINCULADA) */
+        .awards-section {
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.1), transparent);
+            border-top: 1px solid rgba(212,175,55,0.3); border-bottom: 1px solid rgba(212,175,55,0.3);
+            margin: 40px 0; padding: 25px 0; text-align: center;
+        }
+
+        /* MODALES ELITE */
+        .modal-overlay { 
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); 
+            z-index: 2000; align-items: center; justify-content: center; padding: 15px; 
+            backdrop-filter: blur(10px);
+        }
+        .modal-box { 
+            background: #0a0f1a; border: 2px solid var(--gold); border-radius: 20px; 
+            max-width: 350px; width: 100%; padding: 30px; text-align: center; 
+        }
+        
+        input { 
+            width: 100%; padding: 12px; background: black; border: 1px solid rgba(212,175,55,0.4); 
+            border-radius: 8px; color: white; text-align: center; font-weight: 800; margin-bottom: 15px;
+        }
+
+        .check-box-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; }
+        .check-box-container input { width: 18px; height: 18px; margin: 0; accent-color: var(--gold); }
+    </style>
+</head>
+<body>
+    <div class="main-bg"></div>
+
+    <!-- NAVEGACIÓN HÍBRIDA -->
+    <nav class="nav-riven">
+        <div class="max-w-7xl mx-auto w-full px-4 flex justify-between items-center">
+            <!-- VISTA INVITADO / MIEMBRO -->
+            <div id="auth-section" class="w-full flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="text-[10px] font-bold border border-gray-700 px-4 py-1.5 rounded-full text-gray-400">VOLVER</a>
+                    <div id="member-info" class="hidden flex flex-col">
+                        <span id="display-name" class="text-[11px] font-black uppercase italic leading-none">Cargando...</span>
+                        <div class="flex items-center gap-2 mt-1">
+                            <a href="historial.html" class="text-[9px] text-gray-500 font-bold underline">HISTORIAL</a>
+                            <a href="recompensas.html" class="text-[9px] text-yellow-500 font-bold underline">PREMIOS 🎁</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="balance-info" class="text-right">
+                    <div id="guest-pill" class="text-[10px] font-bold text-gray-500 uppercase italic">Hola, Invitado</div>
+                    <div id="member-pill" class="hidden flex flex-col items-end">
+                        <span id="display-balance" class="text-lg font-black text-red-500 leading-none">S/ 0.00</span>
+                        <div class="flex items-center gap-2">
+                            <span id="display-points" class="text-[9px] font-black text-[#d4af37]">0 PTS ⭐</span>
+                            <a href="https://wa.me/51940511991" class="btn-charge">RECARGAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-12 text-center">
+        <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter uppercase">DELTA <span class="text-[#d4af37]">FORCE</span></h1>
+        <p class="text-[10px] md:text-xs text-gray-400 font-bold tracking-[6px] uppercase mt-2">Elite Recharge Service & Credits</p>
+    </header>
+
+    <!-- SECCIÓN PREMIOS (BANNER) -->
+    <section class="awards-section">
+        <h2 class="text-[#d4af37] font-black text-xl italic uppercase">¿Tienes Puntos Estrella?</h2>
+        <p class="text-gray-400 text-[10px] uppercase font-bold mb-4">Canjéalos por saldo o giros en la ruleta</p>
+        <a href="recompensas.html" class="bg-white text-black px-6 py-2 rounded-full font-black text-[11px] uppercase shadow-lg">Entrar a Premios</a>
+    </section>
+
+    <!-- GRILLA DE PRODUCTOS (4 COL CELULAR / 6 COL PC) -->
+    <div id="catalog" class="delta-grid"></div>
+
+    <!-- MODAL 1: DATOS -->
+    <div id="modal-datos" class="modal-overlay" onclick="if(event.target.id === 'modal-datos') cerrarModales()">
+        <div class="modal-box">
+            <h3 class="text-[#d4af37] font-black text-2xl mb-4 uppercase italic">Identificación</h3>
+            <input type="text" id="df-id" placeholder="ID DEL JUGADOR / NICK" class="uppercase">
+            <input type="text" id="guest-code" placeholder="CÓDIGO DE INVITADO (OPCIONAL)" class="uppercase tracking-wider !border-[#d4af37] !text-[#d4af37]">
+            <div class="check-box-container">
+                <input type="checkbox" id="check-terminos">
+                <label for="check-terminos" class="text-[10px] font-bold text-gray-500 uppercase">Acepto los <a href="terminos.html" class="text-[#d4af37] underline">Términos y Condiciones</a></label>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="cerrarModales()" class="flex-1 bg-gray-900 p-3 rounded-xl font-bold text-[10px]">CANCELAR</button>
+                <button onclick="irAPago()" class="flex-1 bg-[#d4af37] text-black p-3 rounded-xl font-black text-[10px]">SIGUIENTE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: PAGO -->
+    <div id="modal-pago" class="modal-overlay" onclick="if(event.target.id === 'modal-pago') cerrarModales()">
+        <div class="modal-box">
+            <h3 class="text-[#d4af37] font-black text-xl mb-6 uppercase">Confirmar Pedido</h3>
+            <div id="pago-resumen" class="text-3xl font-black text-white mb-8 italic tracking-tighter"></div>
+            <button onclick="pagarSaldo()" class="w-full bg-red-600 p-4 rounded-xl font-black text-[11px] uppercase shadow-xl mb-3 border-b-4 border-red-900">Pagar con Saldo Riven</button>
+            <button onclick="enviarWA()" class="w-full bg-[#25d366] p-4 rounded-xl font-black text-[11px] uppercase shadow-xl">WhatsApp / Yape</button>
+            <p class="text-[9px] text-gray-600 font-bold uppercase mt-4">Esta compra suma puntos estrella a tu cuenta</p>
+        </div>
+    </div>
+
+    <!-- MOTOR FIREBASE Y LÓGICA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", authDomain: "rivenflawstore.firebaseapp.com", projectId: "rivenflawstore", storageBucket: "rivenflawstore.firebasestorage.app", messagingSenderId: "251566538187", appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let uS = 0, uN = "Invitado", uI = "", sN = "", sP = 0, lock = false;
+
+        const coins = [
+            { n: "20 Coins", p: 1.00, img: "c20.webp" },
+            { n: "33 Coins", p: 1.70, img: "c33.webp" },
+            { n: "66 Coins", p: 3.00, img: "c66.webp" },
+            { n: "352 Coins", p: 15.99, img: "c352.webp", g: true },
+            { n: "507 Coins", p: 23.99, img: "c507.webp" },
+            { n: "826 Coins", p: 33.99, img: "c826.webp", g: true },
+            { n: "1628 Coins", p: 62.69, img: "c1628.webp" },
+            { n: "2178 Coins", p: 79.36, img: "c2178.webp", g: true },
+            { n: "4346 Coins", p: 145.99, img: "c4346.webp" },
+            { n: "8910 Coins", p: 290.99, img: "c8910.webp", g: true },
+            { n: "17820 Coins", p: 575.26, img: "c17820.webp" },
+            { n: "26730 Coins", p: 871.42, img: "c26730.webp", g: true }
+        ];
+
+        window.render = () => {
+            document.getElementById('catalog').innerHTML = coins.map(i => `
+                <div class="coin-card ${i.g ? 'border-2 border-[#d4af37] glow' : ''}" onclick="abrirMod('${i.n}', ${i.p})">
+                    <div class="coin-header">${i.n}</div>
+                    <div class="coin-img-container">
+                        <img src="img/deltaforce/${i.img}" onerror="this.src='https://placehold.co/200x200/05070a/d4af37?text=COIN'">
+                    </div>
+                    <div class="price-tag">S/ ${i.p.toFixed(2)}</div>
+                    <button class="btn-buy-now">COMPRAR</button>
+                </div>
+            `).join('');
+        };
+
+        window.abrirMod = (n, p) => { sN = n; sP = p; document.getElementById('modal-datos').style.display = 'flex'; };
+        window.cerrarModales = () => { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); };
+
+        window.irAPago = () => {
+            if(!document.getElementById('df-id').value) return alert("¡Soldado! Ingresa tu ID.");
+            if(!document.getElementById('check-terminos').checked) return alert("Acepta los términos y condiciones.");
+            document.getElementById('pago-resumen').innerText = `S/ ${sP.toFixed(2)}`;
+            document.getElementById('modal-datos').style.display = 'none';
+            document.getElementById('modal-pago').style.display = 'flex';
+        };
+
+        window.pagarSaldo = async () => {
+            if(lock || uS < sP) return alert("Saldo insuficiente. ¡Recarga vía WhatsApp!");
+            if(confirm(`¿Confirmas el pago por ${sN}?`)) {
+                try {
+                    lock = true;
+                    // DESCUENTO + SUMA PUNTOS + HISTORIAL
+                    await updateDoc(doc(db, "usuarios", uI), { saldo: increment(-sP), puntos: increment(Math.floor(sP)) });
+                    const gCode = document.getElementById('guest-code').value.trim().toUpperCase() || "NINGUNO";
+                    
+                    await addDoc(collection(db, "pedidos"), { 
+                        player_id: document.getElementById('df-id').value.toUpperCase(), 
+                        producto: `DELTA FORCE: ${sN} (SALDO WEB)`, 
+                        precio: sP, 
+                        monto: sP,
+                        cliente_nombre: uN, 
+                        cliente_uid: uI,
+                        fecha: serverTimestamp(), 
+                        fecha_hora: new Date().toLocaleString(),
+                        estado: "pendiente",
+                        codigo_invitado: gCode
+                    });
+                    alert(`¡ÉXITO! Recibirás ${Math.floor(sP)} Puntos Estrella.`);
+                    location.reload();
+                } catch (e) { alert("Error en el servidor."); lock = false; }
+            }
+        };
+
+        window.enviarWA = async () => {
+            const idJugador = document.getElementById('df-id').value.toUpperCase();
+            const gCode = document.getElementById('guest-code').value.trim().toUpperCase() || "NINGUNO";
+            
+            // 1. Guarda el pedido de respaldo en Firebase para que salga en el admin.html
+            try {
+                await addDoc(collection(db, "pedidos"), {
+                    player_id: idJugador,
+                    producto: `DELTA FORCE: ${sN} (WHATSAPP / YAPE)`,
+                    precio: sP,
+                    monto: sP,
+                    cliente_nombre: uN,
+                    cliente_uid: uI || "invitado",
+                    fecha: serverTimestamp(),
+                    fecha_hora: new Date().toLocaleString(),
+                    estado: "pendiente",
+                    codigo_invitado: gCode
+                });
+            } catch (error) {
+                console.error("Error al respaldar pedido:", error);
+            }
+
+            // 2. Abre el chat con el mensaje formateado
+            const msg = `*RIVEN FLAW STORE - DELTA FORCE*\n\n💎 ITEM: ${sN}\n🆔 ID: ${idJugador}\n👥 INVITADO: ${gCode}\n👤 CLIENTE: ${uN}\n💰 PAGO: S/ ${sP.toFixed(2)}`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                uI = user.uid;
+                const snap = await getDoc(doc(db, "usuarios", uI));
+                if (snap.exists()) {
+                    const d = snap.data();
+                    uS = d.saldo || 0; uN = d.nombre || "Socio";
+                    const pts = d.puntos || 0;
+                    
+                    document.getElementById('display-name').innerText = `HOLA, ${uN.split(' ')[0].toUpperCase()}`;
+                    if(pts > 100) document.getElementById('display-name').classList.add('rango-oro');
+                    
+                    document.getElementById('display-balance').innerText = `S/ ${uS.toFixed(2)}`;
+                    document.getElementById('display-points').innerText = `${pts} PTS ⭐`;
+                    
+                    document.getElementById('guest-pill').classList.add('hidden');
+                    document.getElementById('member-pill').classList.remove('hidden');
+                    document.getElementById('member-info').classList.remove('hidden');
+                }
+            } render();
+        });
+    </script>
+</body>
+</html>
