@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Paquetes VIP</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #0b0b0b; color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        .font-impact { font-family: 'Montserrat', sans-serif; }
+        
+        .btn-back {
+            position: fixed; top: 15px; left: 15px; z-index: 1001;
+            background: rgba(163, 230, 53, 0.9); color: black;
+            width: 35px; height: 35px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.5); text-decoration: none;
+        }
+
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            padding: 10px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        
+        @media (min-width: 1024px) { 
+            .product-grid { 
+                grid-template-columns: repeat(4, 1fr); 
+                gap: 20px; 
+                padding: 20px;
+            } 
+        }
+
+        .product-card { 
+            background: #111; border-radius: 12px; overflow: hidden; 
+            border: 1px solid rgba(163, 230, 53, 0.2); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; cursor: pointer;
+        }
+        .product-card:hover { transform: scale(1.05); border-color: #a3e635; z-index: 10; box-shadow: 0 0 20px rgba(163, 230, 53, 0.2); }
+        
+        .img-box { width: 100%; aspect-ratio: 16 / 10; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+        .product-card:hover .img-box img { transform: scale(1.1); }
+
+        .product-info { padding: 8px; text-align: center; background: #1a1a1a; flex-grow: 1; }
+        .product-name { font-weight: 800; font-size: 10px; text-transform: uppercase; margin-bottom: 4px; color: #fff; height: 24px; overflow: hidden; line-height: 1.1; }
+        .product-price { color: #a3e635; font-weight: 900; font-size: 1.1rem; font-family: 'Montserrat', sans-serif; font-style: italic; }
+
+        .btn-buy { background: #a3e635; color: black; padding: 8px; text-align: center; font-weight: 900; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+
+        .section-separator {
+            text-align: center; margin: 30px 0 10px;
+            font-family: 'Montserrat', sans-serif; font-weight: 900; font-style: italic;
+            color: #a3e635; font-size: 1.2rem; text-transform: uppercase;
+        }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 120; align-items: center; justify-content: center; padding: 15px; }
+        .modal-box { background: #1a1a1a; border: 2px solid #a3e635; padding: 25px; border-radius: 20px; max-width: 350px; width: 100%; text-align: center; }
+        
+        .user-bar { background: rgba(0,0,0,0.9); border-bottom: 1px solid #a3e635; padding: 10px 15px; text-align: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+
+        /* --- CORRECCIÓN DE DISEÑO DE TÉRMINOS --- */
+        .btn-pago-disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; filter: grayscale(1); }
+        .contenedor-terminos { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            margin: 20px 0; 
+            background: rgba(255,255,255,0.08); 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(163, 230, 53, 0.3); 
+        }
+        #check-terminos { width: 20px; height: 20px; accent-color: #a3e635; cursor: pointer; flex-shrink: 0; }
+        .texto-check { font-size: 11px; color: white; font-weight: 700; text-transform: uppercase; text-align: left; line-height: 1.2; }
+    </style>
+</head>
+<body>
+
+    <div class="user-bar">
+        <span id="user-display" class="text-[#a3e635] font-bold text-[11px] italic tracking-tight uppercase">RIVEN FLAW | PAQUETES VIP</span>
+    </div>
+
+    <a href="index.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+
+    <header class="py-8 text-center">
+        <h1 class="font-impact italic text-4xl text-white uppercase tracking-tighter">PAQUETES <span class="text-[#a3e635]">VIP</span></h1>
+        <p class="text-[9px] text-gray-500 font-bold tracking-[0.3em] uppercase mt-1">Stock Exclusivo Riven Flaw</p>
+    </header>
+
+    <div class="section-separator">—— SETS COMPLETOS ——</div>
+    <div class="product-grid" id="grid-paquetes"></div>
+
+    <div class="section-separator">—— DISFRACES ——</div>
+    <div class="product-grid" id="grid-disfraces"></div>
+
+    <div id="modal-datos" class="modal-overlay">
+        <div class="modal-box">
+            <h3 class="text-[#a3e635] font-impact italic text-xl mb-4 uppercase">DATOS DE ENVÍO</h3>
+            <input type="text" id="player-id" placeholder="ID DEL JUGADOR" class="w-full p-3 bg-black border border-gray-700 rounded-lg mb-3 text-center text-white font-bold outline-none uppercase">
+            <div class="flex gap-2">
+                <button onclick="cerrarModales()" class="flex-1 bg-gray-800 text-white p-3 rounded-lg font-bold text-xs uppercase">Cancelar</button>
+                <button onclick="window.irAPagar()" class="flex-1 bg-[#a3e635] text-black p-3 rounded-lg font-bold text-xs uppercase">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-pago" class="modal-overlay">
+        <div class="modal-box text-white">
+            <h3 class="text-[#a3e635] font-bold text-lg mb-2 uppercase italic tracking-tighter">HABLAR CON RIVEN</h3>
+            <p id="info-item" class="text-[10px] text-gray-400 mb-4 uppercase"></p>
+            <div class="text-3xl font-black mb-4">S/ <span id="pago-monto"></span></div>
+
+            <div class="contenedor-terminos">
+                <input type="checkbox" id="check-terminos" onchange="window.toggleTerminos()">
+                <label for="check-terminos" class="texto-check">
+                    Acepto los <a href="terminos.html" class="text-[#a3e635] underline">Términos y Condiciones</a>
+                </label>
+            </div>
+
+            <img src="img/qr_yape.webp" class="w-32 h-32 mx-auto mb-4 border-2 border-[#a3e635] rounded-lg" onerror="this.src='img/qr_yape.jpeg'">
+            
+            <button id="btn-whatsapp" onclick="finalizarWhatsApp()" class="w-full bg-[#a3e635] text-black p-4 rounded-lg font-black uppercase shadow-xl btn-pago-disabled">PEDIR POR WHATSAPP</button>
+            
+            <button onclick="cerrarModales()" class="mt-4 text-gray-500 text-[10px] underline font-bold uppercase tracking-widest">Regresar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", authDomain: "rivenflawstore.firebaseapp.com", projectId: "rivenflawstore", storageBucket: "rivenflawstore.firebasestorage.app", messagingSenderId: "251566538187", appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.itemActual = ""; window.precioActual = 0;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('user-display').innerText = `HOLA, ${data.nombre.split(' ')[0]} | RIVEN STORE VIP`;
+                }
+            } else {
+                document.getElementById('user-display').innerHTML = '<a href="registro.html" class="underline">INICIA SESIÓN</a>';
+            }
+        });
+
+        window.toggleTerminos = function() {
+            const isChecked = document.getElementById('check-terminos').checked;
+            document.getElementById('btn-whatsapp').classList.toggle('btn-pago-disabled', !isChecked);
+        };
+
+        const listaPaquetes = [
+            { n: "Paquete caballero de hierro", p: 25 }, { n: "Paquete Red Hot Chil", p: 25 }, { n: "Paquete Beisbolista", p: 15 },
+            { n: "Paquete Hipster", p: 15 }, { n: "Paquete Un-Ojo", p: 25 }, { n: "Paquete Pantera", p: 25 },
+            { n: "Paquete Edad de Piedra", p: 25 }, { n: "Paquete Dulce Bruja", p: 25 }, { n: "Paquete Fiestera", p: 25 },
+            { n: "Paquete Aniquilador", p: 25 }, { n: "Paquete Campeón de Peso completo", p: 25 }, { n: "Paquete Enanojado", p: 25 },
+            { n: "Paquete Pareja Bailarina", p: 25 }, { n: "Paquete Cinta Negra", p: 25 }, { n: "Paquete Taekwondo", p: 25 },
+            { n: "Paquete Policia", p: 15 }, { n: "Paquete Angel Azul", p: 26 }, { n: "Paquete Traje de Baño", p: 15 },
+            { n: "Paquete Angel y Demonio", p: 25 }, { n: "Paquete Guerrero Calabaza", p: 25 }, { n: "Paquete Juvenil", p: 25 },
+            { n: "Paquete Pandillera Ruda", p: 25 }, { n: "Conjunto Veraniego", p: 25 }, { n: "Paquete traje de baño", p: 25 },
+            { n: "Paquete Gangster", p: 25 }, { n: "Paquete Pandillero Rudo", p: 25 }, { n: "Paquete líder de mafia", p: 25 },
+            { n: "Paquete Frente de Batalla", p: 25 }, { n: "Paquete Comando", p: 25 }, { n: "Paquete Paleolitico", p: 25 },
+            { n: "Paquete Neolitico", p: 25 }, { n: "Jefe de Guerra de la Dinastia", p: 25 }, { n: "Rojo Ardiente", p: 25 }
+        ];
+
+        const listaDisfraces = [
+            { n: "Jefe Militar de la Dinastía", p: 19 }, { n: "Rojo Ardiente", p: 19 }, { n: "Lobo Gris", p: 19 },
+            { n: "Angel Oscuro", p: 19 }, { n: "Elfa Roja", p: 19 }, { n: "Señor Calamar", p: 19 },
+            { n: "Señorita Cthulhu", p: 19 }, { n: "El bailarín de Ballet", p: 19 }, { n: "Chica Especial", p: 10.80 },
+            { n: "Fénix Azul", p: 19 }, { n: "Águila Blanca", p: 19 }, { n: "Corazón de Demonio", p: 19 },
+            { n: "Angel Guardián", p: 19 }, { n: "Ninja", p: 19 }
+        ];
+
+        function render() {
+            const gridP = document.getElementById('grid-paquetes');
+            const gridD = document.getElementById('grid-disfraces');
+            
+            gridP.innerHTML = listaPaquetes.map((item, index) => `
+                <div class="product-card" onclick="abrirDatos('${item.n}', ${item.p})">
+                    <div class="img-box"><img src="img/ff_paquetes/p${index+1}.webp" onerror="this.src='img/ff_paquetes/p${index+1}.jpeg'"></div>
+                    <div class="product-info"><h3 class="product-name">${item.n}</h3><p class="product-price">S/ ${item.p.toFixed(2)}</p></div>
+                    <div class="btn-buy">ADQUIRIR</div>
+                </div>`).join('');
+
+            gridD.innerHTML = listaDisfraces.map((item, index) => `
+                <div class="product-card" onclick="abrirDatos('${item.n}', ${item.p})">
+                    <div class="img-box"><img src="img/ff_paquetes/p${index+34}.webp" onerror="this.src='img/ff_paquetes/p${index+34}.jpeg'"></div>
+                    <div class="product-info"><h3 class="product-name">${item.n}</h3><p class="product-price">S/ ${item.p.toFixed(2)}</p></div>
+                    <div class="btn-buy">ADQUIRIR</div>
+                </div>`).join('');
+        }
+        render();
+
+        window.abrirDatos = (n, p) => { window.itemActual = n; window.precioActual = p; document.getElementById('modal-datos').style.display = 'flex'; };
+        window.cerrarModales = () => { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); };
+
+        window.irAPagar = () => {
+            const pid = document.getElementById('player-id').value;
+            if (!pid) { alert("¡Ingresa el ID del jugador!"); return; }
+            document.getElementById('check-terminos').checked = false;
+            window.toggleTerminos();
+            document.getElementById('pago-monto').innerText = window.precioActual.toFixed(2);
+            document.getElementById('info-item').innerText = `PRODUCTO: ${window.itemActual}`;
+            document.getElementById('modal-datos').style.display = 'none';
+            document.getElementById('modal-pago').style.display = 'flex';
+        };
+
+        window.finalizarWhatsApp = () => {
+            const pid = document.getElementById('player-id').value;
+            const msg = `*COMPRA RIVEN FLAW - PAQUETES*\nHola Riven, deseo adquirir el siguiente paquete:\n📦 PAQUETE: ${window.itemActual}\n💰 PAGO: S/ ${window.precioActual.toFixed(2)}\n⚡ ID JUGADOR: ${pid}`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+    </script>
+</body>
+</html>

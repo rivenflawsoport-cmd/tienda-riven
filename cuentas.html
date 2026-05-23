@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Cuentas Free Fire</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #0b0b0b; color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        .font-impact { font-family: 'Montserrat', sans-serif; }
+        
+        .btn-back { position: fixed; top: 15px; left: 15px; z-index: 1001; background: #a3e635; color: black; width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(163, 230, 53, 0.5); text-decoration: none; }
+        
+        .section-title { font-family: 'Montserrat', sans-serif; font-weight: 900; font-style: italic; color: #a3e635; font-size: 1.4rem; text-align: center; margin: 40px 0 20px; text-transform: uppercase; letter-spacing: -1px; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+        
+        .product-card { 
+            background: #111; border-radius: 12px; overflow: hidden; 
+            border: 1px solid rgba(163, 230, 53, 0.2); display: flex; flex-direction: column; cursor: pointer; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
+            position: relative;
+        }
+        .product-card:hover:not(.sold) { transform: scale(1.05); border-color: #a3e635; z-index: 10; }
+        
+        .img-box { width: 100%; aspect-ratio: 16 / 10; background: #000; overflow: hidden; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+        .product-card:hover:not(.sold) .img-box img { transform: scale(1.1); }
+
+        .badge { position: absolute; top: 8px; right: 8px; font-weight: 900; font-size: 9px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; z-index: 5; }
+        .badge-disponible { background: #a3e635; color: black; box-shadow: 0 0 10px #a3e635; }
+        .badge-vendido { background: #ff4d4d; color: white; }
+
+        .sold { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.5); }
+
+        .product-info { padding: 12px; text-align: center; background: #1a1a1a; flex-grow: 1; }
+        .product-name { font-weight: 800; font-size: 11px; text-transform: uppercase; color: #fff; margin-bottom: 5px; min-height: 30px; line-height: 1.1; display: flex; align-items: center; justify-content: center; }
+        .product-price { color: #f97316; font-weight: 900; font-size: 1.3rem; font-family: 'Montserrat', sans-serif; }
+
+        .btn-buy { background: #a3e635; color: black; padding: 10px; text-align: center; font-weight: 900; font-size: 11px; text-transform: uppercase; }
+
+        .buy-accounts-banner {
+            max-width: 1200px; margin: 60px auto 40px; padding: 30px 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+            border: 2px dashed #ffd700; border-radius: 20px;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .btn-vender { display: inline-block; margin-top: 20px; background: #ffd700; color: black; padding: 15px 40px; border-radius: 12px; font-weight: 900; text-transform: uppercase; font-family: 'Montserrat', sans-serif; transition: 0.3s; cursor: pointer; }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 120; align-items: center; justify-content: center; padding: 15px; }
+        .modal-box { background: #1a1a1a; border: 2px solid #a3e635; padding: 25px; border-radius: 24px; max-width: 400px; width: 100%; text-align: center; }
+        
+        .user-bar { background: rgba(0,0,0,0.9); border-bottom: 1px solid #a3e635; padding: 10px; text-align: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+        .btn-pago-disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; filter: grayscale(1); }
+        .contenedor-terminos { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 15px 0; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; border: 1px solid rgba(163, 230, 53, 0.2); }
+        #check-terminos { width: 18px; height: 18px; accent-color: #a3e635; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="user-bar">
+        <span id="user-display" class="text-[#a3e635] font-bold text-[11px] uppercase italic">RIVEN FLAW | CUENTAS FREE FIRE</span>
+    </div>
+
+    <a href="index.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+
+    <header class="py-10 text-center">
+        <h1 class="font-impact italic text-4xl text-white uppercase tracking-tighter">TIENDA DE <span class="text-[#a3e635]">CUENTAS</span></h1>
+    </header>
+
+    <h2 class="section-title">—— Cuentas Veteranas ——</h2>
+    <div class="product-grid">
+        <div class="product-card" onclick="window.abrirPago('Cuenta Veterana #1', 550)">
+            <span class="badge badge-disponible">Disponible</span>
+            <div class="img-box"><img src="img/ff_cuentas/v1.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta Veterana #1</h3><p class="product-price">S/ 550.00</p></div>
+            <div class="btn-buy">Adquirir</div>
+        </div>
+        <div class="product-card sold">
+            <span class="badge badge-vendido">Vendido</span>
+            <div class="img-box"><img src="img/ff_cuentas/v2.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta Veterana #2</h3><p class="product-price">S/ 0.00</p></div>
+            <div class="btn-buy">Vendido</div>
+        </div>
+        <div class="product-card sold">
+            <span class="badge badge-vendido">Vendido</span>
+            <div class="img-box"><img src="img/ff_cuentas/v3.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta Veterana #3</h3><p class="product-price">S/ 0.00</p></div>
+            <div class="btn-buy">Vendido</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">—— Cuentas Semichacales ——</h2>
+    <div class="product-grid">
+        <div class="product-card" onclick="window.abrirPago('Cuenta Semichacal #1', 450)">
+            <span class="badge badge-disponible">Disponible</span>
+            <div class="img-box"><img src="img/ff_cuentas/ch1.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta Semichacal #1</h3><p class="product-price">S/ 450.00</p></div>
+            <div class="btn-buy">Adquirir</div>
+        </div>
+        <div class="product-card sold">
+            <span class="badge badge-vendido">Vendido</span>
+            <div class="img-box"><img src="img/ff_cuentas/ch2.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta Semichacal #2</h3><p class="product-price">S/ 0.00</p></div>
+            <div class="btn-buy">Vendido</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">—— Para no empezar de cero ——</h2>
+    <div class="product-grid">
+        <div class="product-card" onclick="window.abrirPago('Cuenta No Cero #1', 70, '*Cuenta Naruto Top 🔥*\n✅ Libre de Ban\n✅ Datos Completos\n✅ Ideal para iniciar')">
+            <span class="badge badge-disponible">Disponible</span>
+            <div class="img-box"><img src="img/ff_cuentas/n1.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta para no empezar de cero #1</h3><p class="product-price">S/ 70.00</p></div>
+            <div class="btn-buy">Ver Detalles</div>
+        </div>
+        <div class="product-card" onclick="window.abrirPago('Cuenta No Cero #2', 120, '*Naruto, Jujutsu Kaisen y mas🔥*\n✅ Libre de Ban\n✅ Ropa Variable (341 pecheras)\n✅ Cuenta intermedia')">
+            <span class="badge badge-disponible">Disponible</span>
+            <div class="img-box"><img src="img/ff_cuentas/n2.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta para no empezar de cero #2</h3><p class="product-price">S/ 120.00</p></div>
+            <div class="btn-buy">Ver Detalles</div>
+        </div>
+        <div class="product-card sold">
+            <span class="badge badge-vendido">Vendido</span>
+            <div class="img-box"><img src="img/ff_cuentas/n3.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta para no empezar de cero #3</h3><p class="product-price">S/ 0.00</p></div>
+            <div class="btn-buy">Vendido</div>
+        </div>
+        <div class="product-card sold">
+            <span class="badge badge-vendido">Vendido</span>
+            <div class="img-box"><img src="img/ff_cuentas/n4.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta para no empezar de cero #4</h3><p class="product-price">S/ 0.00</p></div>
+            <div class="btn-buy">Vendido</div>
+        </div>
+        <div class="product-card sold">
+            <span class="badge badge-vendido">Vendido</span>
+            <div class="img-box"><img src="img/ff_cuentas/n5.webp" onerror="this.src='img/riven_placeholder.jpg'"></div>
+            <div class="product-info"><h3 class="product-name">Cuenta para no empezar de cero #5</h3><p class="product-price">S/ 0.00</p></div>
+            <div class="btn-buy">Vendido</div>
+        </div>
+    </div>
+
+    <div class="buy-accounts-banner">
+        <h2 class="font-impact italic text-3xl text-[#ffd700] uppercase mb-2">¿QUIERES VENDER TU CUENTA?</h2>
+        <p class="text-white font-bold text-sm mb-4 uppercase tracking-widest">💰 Compramos cuentas de Free Fire al instante 💰</p>
+        <div onclick="window.venderCuenta()" class="btn-vender">SOLICITAR TASACIÓN AQUÍ</div>
+    </div>
+
+    <div id="modal-pago" class="modal-overlay">
+        <div class="modal-box text-white">
+            <h3 id="modal-titulo" class="text-[#a3e635] font-bold text-xl mb-1 uppercase italic"></h3>
+            <p id="modal-desc" class="text-[10px] text-gray-400 mb-4 uppercase whitespace-pre-line"></p>
+            <div class="text-4xl font-black mb-6">S/ <span id="pago-monto"></span></div>
+            
+            <div class="contenedor-terminos">
+                <input type="checkbox" id="check-terminos" onchange="window.toggleTerminos()">
+                <label for="check-terminos" class="text-[11px] text-white font-bold uppercase cursor-pointer">
+                    Acepto los <a href="terminos.html" class="text-[#a3e635] underline">Términos y Condiciones</a>
+                </label>
+            </div>
+
+            <img src="img/qr_yape.webp" class="w-40 h-40 mx-auto mb-4 border-2 border-[#a3e635] rounded-lg" onerror="this.src='img/qr_yape.jpeg'">
+            <button id="btn-whatsapp" onclick="window.finalizarCompra()" class="w-full bg-[#a3e635] text-black p-4 rounded-lg font-black uppercase btn-pago-disabled">HABLAR CON RIVEN</button>
+            <button onclick="window.cerrarModales()" class="mt-4 text-gray-500 text-[10px] underline font-bold uppercase tracking-widest">Regresar</button>
+        </div>
+    </div>
+
+    <script>
+        window.toggleTerminos = () => {
+            const isChecked = document.getElementById('check-terminos').checked;
+            document.getElementById('btn-whatsapp').classList.toggle('btn-pago-disabled', !isChecked);
+        };
+
+        window.abrirPago = (n, p, desc = "Información detallada al contactar.") => {
+            window.itemSel = n; window.precioSel = p;
+            document.getElementById('modal-titulo').innerText = n;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('pago-monto').innerText = p.toFixed(2);
+            document.getElementById('check-terminos').checked = false;
+            window.toggleTerminos();
+            document.getElementById('modal-pago').style.display = 'flex';
+        };
+
+        window.venderCuenta = () => {
+            const msg = `*VENDER MI CUENTA A RIVEN FLAW*\n💰 Hola Riven, estoy interesado en vender mi cuenta de Free Fire. Quisiera una tasación segura.`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+
+        window.cerrarModales = () => { document.getElementById('modal-pago').style.display = 'none'; };
+
+        window.finalizarCompra = () => {
+            const msg = `*COMPRA DE CUENTA RIVEN FLAW*\n👤 Hola Riven, deseo adquirir el siguiente producto:\n💎 PRODUCTO: ${window.itemSel}\n💰 PRECIO: S/ ${window.precioSel.toFixed(2)}`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+    </script>
+</body>
+</html>

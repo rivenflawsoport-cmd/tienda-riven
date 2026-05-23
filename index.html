@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta property="og:title" content="RIVEN STORE">
+    <meta property="og:description" content="Tu tienda de confianza para recargas gaming al mejor precio. Diamantes de Free Fire, Mobile Legends, cuentas exclusivas y servicios digitales con entrega inmediata y garantía total en Perú.">
+    <meta property="og:image" content="https://rivenstore.shop/img/logo_riven.webp">
+    <meta property="og:url" content="https://rivenstore.shop">
+    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIVEN STORE | Premium Gaming</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #050505; color: white; overflow-x: hidden; margin: 0; padding: 0; }
+        .font-impact { font-family: 'Montserrat', sans-serif; }
+        
+        h1, h3, p, .marquee-content { text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+
+        @keyframes subtleZoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        .bg-animate { animation: subtleZoom 25s infinite ease-in-out; }
+
+        .neon-brand {
+            font-size: 3.5rem;
+            background: linear-gradient(to bottom, #fff 40%, #a3e635 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(163, 230, 53, 0.6));
+            letter-spacing: -2px;
+        }
+
+        .btn-whatsapp-final {
+            background: #25D366;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s ease;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .btn-whatsapp-final:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(37, 211, 102, 0.5); }
+
+        .logo-frame {
+            width: 170px; height: 170px; border-radius: 50%;
+            border: 3px solid #a3e635; overflow: hidden;
+            box-shadow: 0 0 40px rgba(163, 230, 53, 0.3);
+            display: flex; align-items: center; justify-content: center; background: #000;
+            position: relative;
+        }
+        .logo-frame::after {
+            content: ''; position: absolute; inset: -8px;
+            border-radius: 50%; border: 2px dashed rgba(163, 230, 53, 0.4);
+            animation: rotate 12s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .logo-frame img { width: 110%; height: 110%; object-fit: cover; z-index: 2; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+        .glass-card:hover { transform: translateY(-10px); border-color: rgba(163, 230, 53, 0.5); }
+        .glass-card img { opacity: 1; transition: 0.6s; }
+        .glass-card:hover img { transform: scale(1.1); }
+
+        .slider-container { 
+            width: 100%; max-width: 1000px; overflow: hidden; 
+            padding: 20px 0; position: relative; margin: 0 auto;
+            touch-action: pan-y;
+        }
+        .slider-track { display: flex; width: max-content; gap: 15px; animation: scrollSlider 30s linear infinite; }
+        @keyframes scrollSlider { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-280px * 4 - 60px)); } }
+
+        .showcase-card { flex-shrink: 0; width: 280px; height: 160px; border-radius: 15px; overflow: hidden; border: 2px solid rgba(163, 230, 53, 0.3); cursor: pointer; position: relative; }
+        .showcase-img { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+        .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; }
+        .showcase-name { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 900; text-transform: uppercase; font-style: italic; color: #a3e635; text-shadow: 2px 2px 0px #000; }
+
+        .social-btn { transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+        .social-btn:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); border-color: #a3e635; }
+
+        @keyframes tickerInfinite { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .top-marquee { background: rgba(163, 230, 53, 0.15); border-bottom: 1px solid rgba(163, 230, 53, 0.4); padding: 6px 0; overflow: hidden; white-space: nowrap; width: 100vw; position: relative; z-index: 100; backdrop-filter: blur(5px); }
+        .marquee-content { display: inline-block; animation: tickerInfinite 25s linear infinite; font-weight: 800; color: #a3e635; font-size: 11px; letter-spacing: 2px; }
+        
+        .live-sales-bar { background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(163, 230, 53, 0.2); padding: 8px 0; overflow: hidden; white-space: nowrap; width: 100%; position: relative; z-index: 100; }
+        .sales-track { display: inline-block; animation: tickerInfinite 50s linear infinite; font-size: 10px; font-weight: 800; color: #a3e635; text-transform: uppercase; letter-spacing: 1px; }
+        .sales-track span { margin-right: 80px; display: inline-flex; align-items: center; gap: 8px; }
+
+        .terms-link { color: #a3e635; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border: 1px solid rgba(163, 230, 53, 0.3); padding: 10px 20px; border-radius: 30px; background: rgba(255,255,255,0.02); transition: 0.3s; }
+        .terms-link:hover { background: rgba(163, 230, 53, 0.1); border-color: #a3e635; }
+
+        .user-bar-hybrid { 
+            background: rgba(0, 0, 0, 0.85); 
+            border-bottom: 1px solid rgba(163, 230, 53, 0.4); 
+            padding: 10px 15px; 
+            position: relative; 
+            z-index: 101; 
+            display: flex; 
+            justify-content: center; 
+            backdrop-filter: blur(12px); 
+        }
+        #display-balance { 
+            font-size: 14px; 
+            color: #ff4d4d; 
+            font-weight: 800; 
+            padding-left: 10px;
+            margin-left: 10px;
+            border-left: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-premium-nav {
+            background: #a3e635;
+            color: black;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 10px;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(163, 230, 53, 0.4);
+            transition: 0.3s;
+        }
+        .btn-premium-nav:hover { transform: scale(1.05); background: white; }
+
+        .btn-recarga-top {
+            background: #25D366;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+            transition: 0.3s;
+            margin-left: 5px;
+        }
+        .btn-recarga-top:active { transform: scale(0.9); }
+
+        .rango-bronce { color: #cd7f32 !important; }
+        .rango-plata { color: #c0c0c0 !important; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        .rango-oro { color: #ffd700 !important; text-shadow: 0 0 10px rgba(255,215,0,0.6); }
+    </style>
+</head>
+<body>
+
+    <div class="top-marquee">
+        <div class="marquee-content uppercase font-black">
+            SEGURIDAD TOTAL • RAPIDEZ EXTREMA • 100% CONFIABLE • RIVEN FLAW STORE • GARANTÍA EN TODAS TUS RECARGAS • SOPORTE 24/7 • SEGURIDAD TOTAL • RAPIDEZ EXTREMA
+        </div>
+    </div>
+
+    <div class="user-bar-hybrid">
+        <div id="user-status-container" class="max-w-7xl w-full flex justify-between items-center">
+            <div id="guest-view" class="flex justify-between items-center w-full">
+                <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest italic">Aprovecha descuentos de miembro →</span>
+                <a href="registro.html" class="bg-[#a3e635] text-black px-4 py-1 rounded font-black text-[10px]">INICIAR SESIÓN</a>
+            </div>
+            
+            <div id="member-view" class="hidden justify-between items-center w-full">
+                <div class="flex items-center gap-4">
+                    <div class="flex flex-col">
+                        <span id="display-name" class="font-bold italic text-[11px] uppercase leading-tight"></span>
+                        <div class="flex items-center mt-0.5">
+                            <a href="historial.html" class="text-[9px] text-gray-400 font-bold hover:text-[#a3e635] transition-colors mr-3">🕒 HISTORIAL</a>
+                            <a href="https://wa.me/51940511991?text=Hola%20Riven,%20deseo%20recargar%20mi%20saldo%20para%20comprar%20en%20Riven%20Flaw%20Store" class="btn-recarga-top">➕ RECARGAR SALDO</a>
+                        </div>
+                    </div>
+                    <div id="display-balance" class="font-impact italic flex items-center"></div>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <a href="recompensas.html" class="btn-premium-nav">PREMIOS 🎁</a>
+                    <button id="logout-trigger" class="text-[9px] text-red-500 font-bold uppercase ml-2">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="live-sales-bar">
+        <div id="dynamic-sales-track" class="sales-track"></div>
+    </div>
+
+    <img src="img/fondo.webp" class="fixed inset-0 w-full h-full object-cover -z-10 opacity-30 bg-animate" onerror="this.src='img/fondo.jpg'">
+
+    <!-- PEGA ESTO AQUÍ -->
+<nav class="sticky top-0 z-[1000] bg-black/95 backdrop-blur-md border-b border-[#a3e635]/30 px-5 py-3">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="font-impact italic font-black text-xl tracking-tighter uppercase text-white">
+            RIVEN <span class="text-[#a3e635]">FLAW</span>
+        </div>
+        <!-- Aquí no toques nada más, tu sistema de usuario se acomoda solo -->
+    </div>
+</nav>
+<!-- ESTO LLENARÁ EL ESPACIO VACÍO -->
+<div class="relative w-full max-w-7xl mx-auto mt-4 px-4 overflow-hidden group">
+    <!-- Este es el "túnel" por donde pasarán las 20 imágenes -->
+    <div id="banner-wrapper" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth h-48 md:h-72 w-full rounded-2xl border border-white/10 no-scrollbar shadow-2xl">
+        <!-- El Script que pondremos después llenará esto automáticamente -->
+    </div>
+
+    <!-- Los puntitos de navegación -->
+    <div id="slider-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20"></div>
+</div>
+
+<!-- SECCIÓN DE CONFIANZA PROFESIONAL (ESTILO BONOXS) -->
+<div class="max-w-5xl mx-auto px-4 mt-4 mb-6">
+    <div class="grid grid-cols-4 gap-2 md:gap-4">
+        
+        <!-- Cuadro 1 -->
+        <div class="bg-[#1a1a1a] border border-white/5 rounded-xl p-3 flex flex-col items-center justify-center text-center group hover:border-[#a3e635]/30 transition-all">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#a3e635] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            <h4 class="text-[9px] md:text-[11px] font-black uppercase text-white tracking-tighter">Tienda Oficial</h4>
+            <p class="hidden md:block text-[9px] text-gray-500 font-medium">100% Confiable</p>
+        </div>
+
+        <!-- Cuadro 2 -->
+        <div class="bg-[#1a1a1a] border border-white/5 rounded-xl p-3 flex flex-col items-center justify-center text-center group hover:border-[#a3e635]/30 transition-all">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#a3e635] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+            <h4 class="text-[9px] md:text-[11px] font-black uppercase text-white tracking-tighter">Seguro y Simple</h4>
+            <p class="hidden md:block text-[9px] text-gray-500 font-medium">Pagos protegidos</p>
+        </div>
+
+        <!-- Cuadro 3 -->
+        <div class="bg-[#1a1a1a] border border-white/5 rounded-xl p-3 flex flex-col items-center justify-center text-center group hover:border-[#a3e635]/30 transition-all">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#a3e635] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zM17 13V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m4-3H9"></path>
+            </svg>
+            <h4 class="text-[9px] md:text-[11px] font-black uppercase text-white tracking-tighter">Precio Final</h4>
+            <p class="hidden md:block text-[9px] text-gray-500 font-medium">Sin cargos extra</p>
+        </div>
+
+        <!-- Cuadro 4 -->
+        <div class="bg-[#1a1a1a] border border-white/5 rounded-xl p-3 flex flex-col items-center justify-center text-center group hover:border-[#a3e635]/30 transition-all">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#a3e635] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            <h4 class="text-[9px] md:text-[11px] font-black uppercase text-white tracking-tighter">Entrega Veloz</h4>
+            <p class="hidden md:block text-[9px] text-gray-500 font-medium">Carga al instante</p>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* Esto hace que el deslizamiento sea suave y oculte la barra fea de abajo */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .slide-item { min-width: 100%; height: 100%; position: relative; cursor: pointer; }
+</style>
+
+    <main class="relative z-10 px-4 md:px-0">
+    <!-- SECCIÓN: RECOMENDADOS -->
+    <div class="max-w-7xl mx-auto mt-6">
+        <h2 class="text-white font-bold text-[15px] md:text-xl mb-4 italic border-l-4 border-[#a3e635] pl-3">Recomendados para ti</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Free Fire: Fondo Verde -->
+            <a href="freefire.html" class="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 flex flex-col h-32 md:h-52 group">
+                <img src="img/ff.webp" class="w-full h-24 md:h-40 object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                <div class="bg-green-600 flex-1 flex items-center justify-center">
+                    <span class="text-[10px] md:text-sm font-black text-black uppercase italic tracking-widest">FREE FIRE</span>
+                </div>
+            </a>
+            <!-- Mobile Legends: Fondo Azul -->
+            <a href="mobilelegends.html" class="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 flex flex-col h-32 md:h-52 group">
+                <img src="img/mlbb.webp" class="w-full h-24 md:h-40 object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                <div class="bg-blue-600 flex-1 flex items-center justify-center">
+                    <span class="text-[10px] md:text-sm font-black text-white uppercase italic tracking-widest">MOBILE LEGENDS</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- SECCIÓN: POPULARES -->
+    <div class="max-w-7xl mx-auto mt-10 mb-12">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-white font-bold text-[15px] md:text-xl italic border-l-4 border-gray-600 pl-3">Populares en la tienda</h2>
+            <a href="#" class="text-[#a3e635] text-[10px] font-black border border-[#a3e635]/50 px-4 py-1 rounded-full uppercase">Ver Tienda</a>
+        </div>
+        
+        <div class="flex md:grid overflow-x-auto md:overflow-visible grid-cols-4 gap-3 no-scrollbar pb-4 md:pb-0">
+            <!-- Delta Force: Fondo Amarillo -->
+            <a href="deltaforce.html" class="min-w-[140px] md:min-w-0 bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 h-44 md:h-56 flex flex-col group">
+                <img src="img/delta.webp" class="w-full h-32 md:h-44 object-cover">
+                <div class="bg-yellow-500 flex-1 flex items-center justify-center">
+                    <span class="text-[9px] md:text-xs font-black text-black uppercase">DELTA FORCE</span>
+                </div>
+            </a>
+            <!-- Blood Strike: Fondo Rojo -->
+            <a href="bloodstrike.html" class="min-w-[140px] md:min-w-0 bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 h-44 md:h-56 flex flex-col group">
+                <img src="img/blood.webp" class="w-full h-32 md:h-44 object-cover">
+                <div class="bg-red-600 flex-1 flex items-center justify-center">
+                    <span class="text-[9px] md:text-xs font-black text-white uppercase">BLOOD STRIKE</span>
+                </div>
+            </a>
+            <!-- HOK: Fondo Teal/Esmeralda -->
+            <a href="hok.html" class="min-w-[140px] md:min-w-0 bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 h-44 md:h-56 flex flex-col group">
+                <img src="img/hok.webp" class="w-full h-32 md:h-44 object-cover">
+                <div class="bg-teal-500 flex-1 flex items-center justify-center">
+                    <span class="text-[9px] md:text-xs font-black text-black uppercase">H.O.K</span>
+                </div>
+            </a>
+            <!-- Streaming: Fondo Rojo Vivo -->
+            <a href="streaming.html" class="min-w-[140px] md:min-w-0 bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 h-44 md:h-56 flex flex-col group">
+                <img src="img/streaming.webp" class="w-full h-32 md:h-44 object-cover">
+                <div class="bg-red-500 flex-1 flex items-center justify-center">
+                    <span class="text-[9px] md:text-xs font-black text-white uppercase">STREAMING</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+    <h2 class="text-center text-xl font-bold italic text-[#a3e635] mb-4 uppercase tracking-widest">Nuevos Ingresos</h2>
+    <div class="slider-container">
+        <div class="slider-track">
+            <div class="showcase-card" onclick="window.location.href='emotes.html'"><img src="img/ff_portadas/banner_emotes.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">EMOTES</span></div></div>
+            <div class="showcase-card" onclick="window.location.href='paquetes.html'"><img src="img/ff_portadas/banner_paquetes.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">PAQUETES</span></div></div>
+            <div class="showcase-card" onclick="window.location.href='tokens.html'"><img src="img/ff_portadas/banner_tokens.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">TOKENS</span></div></div>
+            <div class="showcase-card" onclick="window.location.href='cuentas.html'"><img src="img/ff_portadas/cuentas_ff.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">CUENTAS</span></div></div>
+            <div class="showcase-card" onclick="window.location.href='emotes.html'"><img src="img/ff_portadas/banner_emotes.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">EMOTES</span></div></div>
+            <div class="showcase-card" onclick="window.location.href='paquetes.html'"><img src="img/ff_portadas/banner_paquetes.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">PAQUETES</span></div></div>
+            <div class="showcase-card" onclick="window.location.href='tokens.html'"><img src="img/ff_portadas/banner_tokens.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">TOKENS</span></div></div>
+            <div class="showcase-card" onclick="window.location.href='cuentas.html'"><img src="img/ff_portadas/cuentas_ff.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">CUENTAS</span></div></div>
+        </div>
+    </div>
+
+    <section class="max-w-7xl mx-auto px-8 mb-24 mt-12 relative z-10 text-center">
+        <p class="text-[#a3e635] font-bold text-xs mb-6 tracking-widest uppercase">¿Necesitas ayuda con tu recarga?</p>
+        <a href="https://wa.me/51940511991" target="_blank" class="btn-whatsapp-final text-white px-8 py-4 font-black rounded-xl flex items-center justify-center gap-3 transition-all uppercase text-sm mb-12">
+            <span>SOPORTE WHATSAPP OFICIAL</span>
+        </a>
+        <div class="mb-12"><a href="terminos.html" class="terms-link italic">TÉRMINOS Y CONDICIONES</a></div>
+        <div class="mt-20 max-w-5xl mx-auto text-left border-t border-white/10 pt-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                <div>
+                    <h3 class="text-white font-black text-2xl italic uppercase tracking-tighter">
+                        REFERENCIAS DE <span class="text-[#a3e635]">COMPRADORES OFICIALES</span>
+                    </h3>
+                    <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mt-1">
+                        Comunidad 100% real. Recuerda que después de tu compra puedes dejarnos tu comentario recomendándonos.
+                    </p>
+                </div>
+                <button onclick="toggleFormularioResena()" class="bg-[#a3e635] text-black px-5 py-2.5 rounded-xl font-black text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+                    ✍️ DEJAR REFERENCIA
+                </button>
+            </div>
+
+            <div id="wrapper-formulario-resena" class="hidden bg-[#0d0d0d] border border-[#a3e635]/20 rounded-2xl p-6 mb-8 transition-all">
+                <div id="candado-comentario" class="text-center py-4">
+                    <p class="text-red-500 font-bold uppercase text-xs tracking-wider">
+                        ❌ Para dejar una referencia, primero debes iniciar sesión y realziar tu primera compra. Esto es para garantizar que los comentarios sean de compradores reales y mantener la confianza en nuestra comunidad. Gracias por tu comprensión.
+                    </p>
+                </div>
+                <div id="box-comentario-real" class="hidden flex flex-col gap-4">
+                    <h4 class="text-[#a3e635] font-black text-xs uppercase tracking-widest">Escribe tu experiencia en RIVENSTORE.SHOP:</h4>
+                    <textarea id="texto-resena" rows="3" placeholder="Ej: Excelente servicio, mis diamantes llegaron en menos de 3 minutos. Muy confiable." class="w-full bg-black border border-white/10 rounded-xl p-3 text-white text-sm outline-none focus:border-[#a3e635] transition-colors"></textarea>
+                    <button id="btn-subir-resena" class="bg-[#a3e635] text-black font-black text-xs py-3 rounded-xl uppercase tracking-widest">Enviar Comentario Oficial</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2 no-scrollbar border border-white/5 bg-black/40 rounded-2xl p-4">
+                
+                <div id="live-reviews-container" class="contents"></div>
+
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Demoraron un poco pero me llego, compré mil diamantes y si cumplen. Usen mi codigo de Invitado MASINO porfavor"</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-green-500 uppercase tracking-wider">🔥 FREE FIRE</span><span class="text-[11px] font-bold text-[#a3e635]">Masino T. ⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"CODE INVITADO: KECINCITO por primera vez que compro el Pase Booyah por aquí ME SORPRENDIERON SUS PRECIOS, valio la pena la espera pero la ruleta deberia incluir mas premios de free fire"</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-green-500 uppercase tracking-wider">🔥 FREE FIRE</span><span class="text-[11px] font-bold text-[#a3e635]">Kevin S. ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Los pases semanales salen baratas por acá lo que me gusto es que me resolvieron el problema que hubo con mi servidor , recomendado Riven legal."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-blue-500 uppercase tracking-wider">⚔️ MLBB</span><span class="text-[11px] font-bold text-[#a3e635]">NobbMaster69 ⭐⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Ya voy cargando más de 10 veces y nunca falla, lo unico que no me gusto fue que los precios baratos son solo una vez por monto. mi codigo de Invitado DANNFF"</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-green-500 uppercase tracking-wider">🔥 FREE FIRE</span><span class="text-[11px] font-bold text-[#a3e635]">Dany X. ⭐⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"mi codigo de invitado es ELITE recuerden comprar usando mi codigo amigos yo compre Emotes para probar si era verdad y si cumplieron pero demoraron como 10 minutos pero por el precio valio la pena por eso te doy 4 estrellas."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-green-500 uppercase tracking-wider">🔥 FREE FIRE</span><span class="text-[11px] font-bold text-[#a3e635]">Elite_Player ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">" usen code PANCHITO15 los precios sorprendentes y baratos a compracion de Tiendas oficiales todo transparente y las ruletas de premios se ven buenas pero deberian vender 6000 diaamntes a 120 soles como mi priemra compra siempre."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-green-500 uppercase tracking-wider">🔥 FREE FIRE</span><span class="text-[11px] font-bold text-[#a3e635]">farith 57. ⭐⭐</span></div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Los 330 diamantes para el moba me llegaron directo  en menos de 5 min. Excelente mi codigo es peruano15."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-blue-500 uppercase tracking-wider">⚔️ MLBB</span><span class="text-[11px] font-bold text-[#a3e635]">Mat4poll4s15 ⭐⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Súper confiable me cargaron al rapido sin problemas desde ahora estoy comprando y fiel cliente deberian volver los cristeles de Genshin por eso le dare solo 1 puntuacion."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-blue-500 uppercase tracking-wider">⚔️ MLBB</span><span class="text-[11px] font-bold text-[#a3e635]">Fabrizio G. ⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Compré el paquete mensual épico y llegó, sí cumplen con los premios de la ruleta tamvien me toco un netflix gracias."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-blue-500 uppercase tracking-wider">⚔️ MLBB</span><span class="text-[11px] font-bold text-[#a3e635]">Marco L. ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Aproveché la doble recompensa de 500 diamantes y me bendijo en solo unos movimientos."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-blue-500 uppercase tracking-wider">⚔️ MLBB</span><span class="text-[11px] font-bold text-[#a3e635]">Luis T. ⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Todo legal, los diamantes cargan súper rápido directo a la cuenta, 100% recomendado."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-blue-500 uppercase tracking-wider">⚔️ MLBB</span><span class="text-[11px] font-bold text-[#a3e635]">Goku77 ⭐⭐⭐⭐</span></div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Excelente las Delta Coins, al fin una página seria que entrega rápido los créditos de DF."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-yellow-500 uppercase tracking-wider">🎖️ DELTA FORCE</span><span class="text-[11px] font-bold text-[#a3e635]">Sandra P. ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Cargué 826 Coins con saldo de la web y salió al instante, sumé mis puntos estrella!"</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-yellow-500 uppercase tracking-wider">🎖️ DELTA FORCE</span><span class="text-[11px] font-bold text-[#a3e635]">Doris M. ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Servicio de recarga oficial A1, rápido y confiable para las monedas de Delta, recomendado."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-yellow-500 uppercase tracking-wider">🎖️ DELTA FORCE</span><span class="text-[11px] font-bold text-[#a3e635]">Socio_DF ⭐⭐⭐⭐⭐</span></div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"USEN MI CDOGIO DE INVITADO STRIKER acerca de el oro para Blood Strike llegó completo en minutos, el proceso fue súper simple."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-red-500 uppercase tracking-wider">🩸 BLOOD STRIKE</span><span class="text-[11px] font-bold text-[#a3e635]">Striker97 ⭐⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Muy buena atención, cargado por ID sin pedir contraseñas ni nada raro, súper seguro."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-red-500 uppercase tracking-wider">🩸 BLOOD STRIKE</span><span class="text-[11px] font-bold text-[#a3e635]">Bryan L. ⭐⭐⭐⭐</span></div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Los tokens de HOK llegaron rapidísimo por ID. El mejor lugar para comprar seguro."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-teal-500 uppercase tracking-wider">👑 HOK</span><span class="text-[11px] font-bold text-[#a3e635]">KingGamer ⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Tokens completos y directo a mi cuenta. Sin duda alguna Riven Flaw es de confianza."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-teal-500 uppercase tracking-wider">👑 HOK</span><span class="text-[11px] font-bold text-[#a3e635]">Alex M. ⭐⭐</span></div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Mi cuenta de Netflix VIP 4K funcionando perfecto, dan soporte de inmediato."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-purple-500 uppercase tracking-wider">📺 STREAMING</span><span class="text-[11px] font-bold text-[#a3e635]">Raul V. ⭐⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"El perfil de Disney+ dura el mes completo, legal y con soporte al instante, ellos no estafn tengan cuidado con un chico que ofrece servicios de disney por whatsapp."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-purple-500 uppercase tracking-wider">📺 STREAMING</span><span class="text-[11px] font-bold text-[#a3e635]">Mia_Gamer ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Spotify Premium sin anuncios, activado en mi propia cuenta familiar, un golazo."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-purple-500 uppercase tracking-wider">📺 STREAMING</span><span class="text-[11px] font-bold text-[#a3e635]">Cris T. ⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Crunchyroll Mega Fan funcionando al 100%, súper recomendado el servicio compre popr un año y ya llevo un buen tiempo sin problemas."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-purple-500 uppercase tracking-wider">📺 STREAMING</span><span class="text-[11px] font-bold text-[#a3e635]">OtakuPro ⭐⭐⭐⭐⭐</span></div>
+                </div>
+
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Al principio dudé pero el soporte por WhatsApp me guio en todo el pago, excelente."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-gray-500 uppercase tracking-wider">🛡️ SISTEMA</span><span class="text-[11px] font-bold text-[#a3e635]">Mateo S. ⭐⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Lo mejor es que acumulas puntos estrella para canjear saldo gratis, gran iniciativa."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-gray-500 uppercase tracking-wider">🛡️ SISTEMA</span><span class="text-[11px] font-bold text-[#a3e635]">Renzo K. ⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Los códigos de invitado de mis amigos me dieron saldo inicial gratis, buena tienda."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-gray-500 uppercase tracking-wider">🛡️ SISTEMA</span><span class="text-[11px] font-bold text-[#a3e635]">Lucas P. ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Atención rápida a la medianoche, me salvaron para comprar el pase a tiempo."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-gray-500 uppercase tracking-wider">🛡️ SISTEMA</span><span class="text-[11px] font-bold text-[#a3e635]">Juancito ⭐⭐⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">"Totalmente seguro, los diamantes caen legalmente sin riesgo de baneo, verificado."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-gray-500 uppercase tracking-wider">🛡️ SISTEMA</span><span class="text-[11px] font-bold text-[#a3e635]">Alvaro Y. ⭐⭐</span></div>
+                </div>
+                <div class="bg-[#121212] border border-white/5 p-4 rounded-xl flex flex-col justify-between">
+                    <p class="text-gray-300 text-xs italic">" amigos usen mi codigo DiegoH EN Riven Flaw Store es la única que cumple con los tiempos de entrega exactos, recomendados."</p>
+                    <div class="flex justify-between items-center mt-3 border-t border-white/5 pt-2"><span class="text-[10px] font-black text-gray-500 uppercase tracking-wider">🛡️ SISTEMA</span><span class="text-[11px] font-bold text-[#a3e635]">Diego M. ⭐⭐⭐</span></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex justify-center items-center gap-8">
+            <a href="https://www.facebook.com/share/1CgKH31XrG/" target="_blank" class="social-btn"><svg class="w-8 h-8" fill="#1877F2" viewBox="0 0 448 512"><path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"/></svg></a>
+            <a href="https://www.instagram.com/rivenflaw" target="_blank" class="social-btn"><svg class="w-8 h-8" viewBox="0 0 448 512"><defs><linearGradient id="g" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><path fill="url(#g)" d="M224.1 141c-43.6 0-79 35.4-79 79 0 43.6 35.4 79 79 79s79-35.4 79-79c0-43.6-35.4-79-79-79zm0 133c-29.8 0-54-24.2-54-54s24.2-54 54-54 54 24.2 54 54-24.2 54-54 54zm127.1-133.3c-1.3-21.8-11.4-40.8-27.4-56.8s-35-26.1-56.8-27.4c-22.1-1.2-88.5-1.2-110.6 0-21.8 1.3-40.8 11.4-56.8 27.4s-26.1 35-27.4 56.8c-1.2 22.1-1.2 88.5 0 110.6 1.3 21.8 11.4 40.8 27.4 56.8s35 26.1 56.8 27.4c22.1 1.2 88.5 1.2 110.6 0 21.8-1.3 40.8-11.4 56.8-27.4s26.1-35 27.4-56.8c1.2-22.1 1.2-88.5 0-110.6zm-25.5 187.5c-4.2 10.7-12.7 19.2-23.4 23.4-17.4 6.9-58.7 5.3-78.2 5.3s-60.8 1.6-78.2-5.3c-10.7-4.2-19.2-12.7-23.4-23.4-6.9-17.4-5.3-58.7-5.3-78.2s-1.6-60.8 5.3-78.2c4.2-10.7 12.7-19.2 23.4-23.4 17.4-6.9 58.7-5.3 78.2-5.3s60.8-1.6 78.2 5.3c10.7 4.2 19.2 12.7 23.4 23.4 6.9 17.4 5.3 58.7 5.3 78.2s1.6 60.8-5.3 78.2zM334.8 133.2c0 10.8-8.7 19.5-19.5 19.5s-19.5-8.7-19.5-19.5 8.7-19.5 19.5-19.5 19.5 8.7 19.5 19.5z"/></svg></a>
+            <a href="https://www.tiktok.com/@riven_flaw_2.0" target="_blank" class="social-btn"><svg class="w-8 h-8" fill="#fff" viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/></svg></a>
+        </div>
+    </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", authDomain: "rivenflawstore.firebaseapp.com", projectId: "rivenflawstore", storageBucket: "rivenflawstore.firebasestorage.app", messagingSenderId: "251566538187", appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            const guestView = document.getElementById('guest-view'), memberView = document.getElementById('member-view');
+            const nameTag = document.getElementById('display-name'), balanceTag = document.getElementById('display-balance');
+            
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const saldoVal = parseFloat(data.saldo || 0);
+                    const puntosVal = parseInt(data.puntos || 0);
+                    
+                    nameTag.innerText = `HOLA, ${data.nombre.split(' ')[0]}`;
+                    balanceTag.innerHTML = `S/. ${saldoVal.toFixed(2)} <span class="text-[#a3e635] ml-2 text-[10px] italic">| ⭐️ ${puntosVal} PTS</span>`;
+                    
+                    if (saldoVal >= 100) nameTag.className = "rango-oro font-bold italic text-xs uppercase";
+                    else if (saldoVal >= 30) nameTag.className = "rango-plata font-bold italic text-xs uppercase";
+                    else nameTag.className = "rango-bronce font-bold italic text-xs uppercase";
+                    
+                    guestView.classList.add('hidden'); memberView.classList.remove('hidden'); memberView.classList.add('flex');
+                }
+            }
+        });
+
+        const nombres = ["Carlos R.", "Doris M.", "Kevin S.", "Marco L.", "Jefferson A.", "Dany X.", "Sandra P.", "Goku77", "Elite_Player", "RivenFan", "Luis T.", "Fabrizio G."];
+        const acciones = ["compró 520 Diamantes ✅", "recargó S/ 20.00 de Saldo ✅", "adquirió Pase Booyah ✅", "compró Emote Premium ✅", "activó Membresía Semanal ✅"];
+        function generateSales() {
+            const track = document.getElementById('dynamic-sales-track');
+            let content = "";
+            for (let i = 0; i < 20; i++) {
+                const n = nombres[Math.floor(Math.random() * nombres.length)];
+                const a = acciones[Math.floor(Math.random() * acciones.length)];
+                content += `<span>🚀 ${n} ${a}</span>`;
+            }
+            track.innerHTML = content + content;
+        }
+        generateSales();
+
+        document.getElementById('logout-trigger').addEventListener('click', () => { signOut(auth).then(() => window.location.reload()); });
+
+        // --- LÓGICA DEL BANNER DINÁMICO (20 IMÁGENES) ---
+const bannerConfig = [
+    { img: 'ff_1', link: 'https://wa.me/51940511991?text=Hola%20Riven!%20Deseo%20información%20sobre%20la%20PROMO%20DE%20PRIMERA%20RECARGA%20', txt: 'PRIMERA RECARGA', sub: '¡BONUS DEL 100% DISPONIBLE!' },
+    { img: 'ff_2', link: 'freefire.html', txt: 'FREE FIRE', sub: 'Diamantes al instante' },
+    { img: 'ff_3', link: 'freefire.html', txt: 'FREE FIRE', sub: 'Pases y Emotes' },
+    { img: 'ff_4', link: 'freefire.html', txt: 'FREE FIRE', sub: 'Membresías Semanales' },
+    { img: 'ff_5', link: 'freefire.html', txt: 'FREE FIRE', sub: 'Ofertas Flash' },
+    { img: 'ml_1', link: 'mobilelegends.html', txt: 'MOBILE LEGENDS', sub: 'Starlight Member' },
+    { img: 'ml_2', link: 'mobilelegends.html', txt: 'MOBILE LEGENDS', sub: 'Diamantes VIP' },
+    { img: 'ml_3', link: 'mobilelegends.html', txt: 'MOBILE LEGENDS', sub: 'Skins Exclusivas' },
+    { img: 'df_1', link: 'deltaforce.html', txt: 'DELTA FORCE', sub: 'Delta Coins' },
+    { img: 'df_2', link: 'deltaforce.html', txt: 'DELTA FORCE', sub: 'Recarga Oficial' },
+    { img: 'bs_1', link: 'bloodstrike.html', txt: 'BLOOD STRIKE', sub: 'Oro al mejor precio' },
+    { img: 'bs_2', link: 'bloodstrike.html', txt: 'BLOOD STRIKE', sub: 'Entrega en minutos' },
+    { img: 'hok_1', link: 'hok.html', txt: 'HONOR OF KINGS', sub: 'Tokens oficiales' },
+    { img: 'hok_2', link: 'hok.html', txt: 'HONOR OF KINGS', sub: 'Recarga segura' },
+    { img: 'st_1', link: 'streaming.html', txt: 'NETFLIX VIP', sub: 'Cuentas Premium' },
+    { img: 'st_2', link: 'streaming.html', txt: 'DISNEY+', sub: 'Meses completos' },
+    { img: 'st_3', link: 'streaming.html', txt: 'HBO MAX', sub: '4K Ultra HD' },
+    { img: 'st_4', link: 'streaming.html', txt: 'SPOTIFY', sub: 'Música sin anuncios' },
+    { img: 'st_5', link: 'streaming.html', txt: 'CRUNCHYROLL', sub: 'Anime sin límites' },
+    { img: 'st_6', link: 'streaming.html', txt: 'PRIME VIDEO', sub: 'Estrenos exclusivos' }
+];
+
+const bWrapper = document.getElementById('banner-wrapper');
+const dContainer = document.getElementById('slider-dots');
+
+bannerConfig.forEach((item, i) => {
+    const slide = document.createElement('a');
+    slide.href = item.link;
+    slide.className = "slide-item snap-start block w-full h-full flex-shrink-0 relative";
+    
+    // AQUÍ ESTÁ EL CAMBIO: Sin textos y con object-contain
+    slide.innerHTML = `
+        <div class="relative w-full h-full flex items-center justify-center bg-black">
+            <!-- Fondo de relleno inteligente -->
+            <div class="absolute inset-0 bg-cover bg-center opacity-40 blur-md scale-110" 
+                 style="background-image: url('img/publicidad/${item.img}.webp')">
+            </div>
+            
+            <!-- Imagen principal que manda en el tamaño -->
+            <img src="img/publicidad/${item.img}.webp" 
+                 class="relative z-10 max-w-full max-h-full object-contain" 
+                 onerror="this.src='https://placehold.co/1200x400/0a1120/a3e635?text=${item.txt}'">
+        </div>
+    `;
+    
+    bWrapper.appendChild(slide);
+
+    const dot = document.createElement('div');
+    dot.className = `h-1 w-3 rounded-full bg-white/20 transition-all ${i === 0 ? 'bg-[#a3e635] w-6' : ''}`;
+    dContainer.appendChild(dot);
+});
+
+const allDots = dContainer.querySelectorAll('div');
+bWrapper.addEventListener('scroll', () => {
+    const idx = Math.round(bWrapper.scrollLeft / bWrapper.offsetWidth);
+    allDots.forEach((d, i) => {
+        d.className = `h-1 w-3 rounded-full bg-white/20 transition-all ${i === idx ? 'bg-[#a3e635] w-6' : ''}`;
+    });
+});
+
+setInterval(() => {
+    const nIdx = (Math.round(bWrapper.scrollLeft / bWrapper.offsetWidth) + 1) % bannerConfig.length;
+    bWrapper.scrollTo({ left: nIdx * bWrapper.offsetWidth, behavior: 'smooth' });
+}, 5000);
+// --- MOTOR DE RESEÑAS & CANDADO COMPRADOR VERIFICADO ---
+        import { collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        let puedeComentarGlobal = false;
+        let nombreUsuarioGlobal = "Gamer";
+
+        window.toggleFormularioResena = () => {
+            const frm = document.getElementById('wrapper-formulario-resena');
+            frm.classList.toggle('hidden');
+        };
+
+        // Escuchamos la base de datos en la carga de usuario original
+        const chequeoOriginalAuth = auth.onAuthStateChanged;
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (docSnap.exists()) {
+                    const d = docSnap.data();
+                    nombreUsuarioGlobal = d.nombre || "Gamer";
+                    
+                    // Si el admin le activó el permiso tras la entrega de su pedido
+                    if (d.puede_comentar === true) {
+                        document.getElementById('candado-comentario').classList.add('hidden');
+                        document.getElementById('box-comentario-real').classList.remove('hidden');
+                        puedeComentarGlobal = true;
+                    }
+                }
+            }
+            cargarResenasVivas();
+        });
+
+        // Guardar la nueva reseña en Firebase
+        document.getElementById('btn-subir-resena')?.addEventListener('click', async () => {
+            const txt = document.getElementById('texto-resena').value.trim();
+            if (!txt) return alert("Por favor escribe tu comentario.");
+            if (!puedeComentarGlobal) return alert("No tienes permisos de compra verificada.");
+
+            try {
+                document.getElementById('btn-subir-resena').innerText = "PUBLICANDO...";
+                await addDoc(collection(db, "reseñas"), {
+                    nombre: nombreUsuarioGlobal,
+                    comentario: txt,
+                    fecha: serverTimestamp(),
+                    juego: "🛡️ COMPRA WEB"
+                });
+                
+                // Opcional: quitamos el permiso para que no duplique spam
+                await updateDoc(doc(db, "usuarios", auth.currentUser.uid), { puede_comentar: false });
+                
+                alert("¡Gracias por tu referencia! Tu opinión ayuda a crecer a RIVEN FLAW.");
+                location.reload();
+            } catch (err) {
+                alert("Error al subir reseña.");
+                document.getElementById('btn-subir-resena').innerText = "Enviar Comentario Oficial";
+            }
+        });
+
+        // Jalar y renderizar las reseñas nuevas escritas por los compradores encima de las fijas
+        async function cargarResenasVivas() {
+            const container = document.getElementById('live-reviews-container');
+            if (!container) return;
+            try {
+                const q = query(collection(db, "reseñas"), orderBy("fecha", "desc"));
+                const snap = await getDocs(q);
+                let html = "";
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    html += `
+                        <div class="bg-[#121212] border border-[#a3e635]/30 p-4 rounded-xl flex flex-col justify-between shadow-[0_0_15px_rgba(163,230,53,0.05)]">
+                            <p class="text-white text-xs italic font-semibold">"${data.comentario}"</p>
+                            <div class="flex justify-between items-center mt-3 border-t border-[#a3e635]/10 pt-2">
+                                <span class="text-[10px] font-black text-[#a3e635] uppercase tracking-wider">${data.juego || '🛡️ COMPRA VERIFICADA'}</span>
+                                <span class="text-[11px] font-bold text-white">${data.nombre.split(' ')[0]} ⭐⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (e) { console.error("Error al cargar reseñas vivas:", e); }
+        }
+    </script>
+    <div id="popup-comunidad" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+        <div class="relative bg-[#0f0f0f] border border-[#a3e635]/20 rounded-2xl max-w-sm w-full p-6 text-center shadow-[0_0_50px_rgba(163,230,53,0.15)]">
+            
+            <div class="absolute -top-3 -right-3 bg-[#0f0f0f] border border-[#a3e635]/30 rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                <svg class="absolute inset-0 w-full h-full -rotate-90 p-1" viewBox="0 0 36 36">
+                    <path class="text-white/5" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path id="progress-circle" class="text-[#a3e635] transition-all duration-1000 ease-linear" stroke-width="3" stroke-dasharray="100, 100" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <span id="countdown-number" class="relative z-10 font-impact text-sm text-[#a3e635]">4</span>
+            </div>
+
+            <div class="w-14 h-14 bg-[#25D366]/10 border border-[#25D366]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="#25D366" viewBox="0 0 448 512">
+                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                </svg>
+            </div>
+
+            <h3 class="font-impact italic text-xl text-white uppercase tracking-tight mb-2">Únete a la Comunidad</h3>
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-5 leading-relaxed px-2">
+                Entra a nuestro canal exclusivo de <span class="text-[#a3e635]">Riven Store</span> para cazar ofertas flash de diamantes y stock VIP antes que el resto.
+            </p>
+
+            <div class="flex flex-col gap-2">
+                <a href="https://whatsapp.com/channel/0029Vb89F4l2phHQhX3C0f2Z" target="_blank" class="bg-[#25D366] text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider hover:scale-102 transition-transform shadow-[0_0_20px_rgba(37,211,102,0.2)]">
+                    UNIRME AL CANAL
+                </a>
+                <button onclick="cerrarPopupComunidad()" class="text-[9px] text-gray-600 font-bold uppercase tracking-widest hover:text-white transition-colors pt-1">
+                    Continuar a la página
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Salta a los 2 segundos de entrar a la web
+        setTimeout(() => {
+            const popup = document.getElementById('popup-comunidad');
+            if (popup) {
+                popup.classList.remove('hidden');
+                initCountdown();
+            }
+        }, 2000);
+
+        function initCountdown() {
+            let segundos = 3;
+            const numberTag = document.getElementById('countdown-number');
+            const circleTag = document.getElementById('progress-circle');
+            
+            const intervalo = setInterval(() => {
+                segundos--;
+                
+                if (numberTag) numberTag.innerText = segundos;
+                
+                // Actualiza el círculo verde restando porcentaje (33.33% por segundo)
+                if (circleTag) {
+                    let porcentaje = (segundos / 3) * 100;
+                    circleTag.setAttribute('stroke-dasharray', `${porcentaje}, 100`);
+                }
+
+                if (segundos <= 0) {
+                    clearInterval(intervalo);
+                    cerrarPopupComunidad();
+                }
+            }, 1000);
+        }
+
+        function cerrarPopupComunidad() {
+            const popup = document.getElementById('popup-comunidad');
+            if (popup) {
+                popup.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIVEN FLAW | Recompensas VIP & Ruleta</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #050505; color: white; overflow-x: hidden; margin: 0; padding: 0; }
+        .font-impact { font-family: 'Montserrat', sans-serif; }
+        .neon-text { text-shadow: 0 0 10px rgba(163, 230, 53, 0.8), 0 0 20px rgba(163, 230, 53, 0.4); }
+        
+        /* BOTÓN VOLVER */
+        .btn-back {
+            position: fixed; top: 15px; left: 15px; z-index: 1001;
+            background: rgba(0,0,0,0.6); border: 2px solid #a3e635;
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .btn-back:hover { background: #a3e635; color: black; transform: scale(1.1); }
+
+        /* RULETA RESPONSIVA */
+        .roulette-container { position: relative; width: 280px; height: 280px; margin: 0 auto; }
+        @media (min-width: 768px) { .roulette-container { width: 320px; height: 320px; } }
+
+        #wheelCanvas { width: 100%; height: 100%; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); filter: drop-shadow(0 0 20px rgba(163, 230, 53, 0.2)); }
+        
+        .marker { 
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            width: 25px; height: 35px; background: #a3e635; clip-path: polygon(0 0, 100% 0, 50% 100%);
+            z-index: 20; filter: drop-shadow(0 0 10px #a3e635);
+        }
+        
+        .center-hub {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 55px; height: 55px; background: #000; border: 3px solid #a3e635;
+            border-radius: 50%; z-index: 10; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; box-shadow: 0 0 15px rgba(163, 230, 53, 0.5);
+        }
+        .center-hub img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        .progress-container { background: rgba(255,255,255,0.05); border-radius: 20px; height: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #a3e635, #22c55e); transition: width 1s ease; }
+        
+        .reward-card { 
+            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; 
+            padding: 12px; transition: 0.4s; position: relative; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .reward-card:hover { border-color: #a3e635; transform: translateY(-5px); background: rgba(163, 230, 53, 0.05); }
+        .reward-img { width: 100%; height: 80px; object-fit: contain; margin-bottom: 8px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+
+        .btn-canje { width: 100%; padding: 8px; border-radius: 10px; font-weight: 800; text-transform: uppercase; text-align: center; font-size: 10px; }
+        .btn-disabled { background: #333; color: #666; cursor: not-allowed; }
+        .btn-active { background: #a3e635; color: #000; cursor: pointer; box-shadow: 0 4px 15px rgba(163, 230, 53, 0.4); }
+
+        .user-nav { background: rgba(0,0,0,0.8); border-bottom: 1px solid rgba(163, 230, 53, 0.2); padding: 12px 20px; backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#a3e635" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </a>
+
+    <nav class="user-nav">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-impact italic text-lg text-white uppercase">RIVEN <span class="text-[#a3e635]">FLAW</span></a>
+            <div id="user-info" class="flex items-center gap-3">
+                <div class="text-right">
+                    <p id="nav-name" class="text-[9px] font-bold uppercase text-gray-400 italic">Invitado</p>
+                    <p id="nav-points" class="text-xs font-black text-[#a3e635]">0 PTS ⭐️</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <img src="img/fondo.webp" class="fixed inset-0 w-full h-full object-cover -z-10 opacity-20">
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        
+        <section class="text-center mb-10">
+            <h1 class="font-impact italic text-4xl md:text-6xl uppercase mb-4 neon-text">RECOMPENSAS</h1>
+            <div class="bg-white/5 p-5 rounded-3xl border border-white/10 max-w-2xl mx-auto">
+                <div class="flex justify-between mb-2 text-xs md:text-sm">
+                    <span id="current-rank-text" class="font-impact italic uppercase">Rango Bronce</span>
+                    <span class="font-black text-[#a3e635]"><span id="points-display">0</span> / 1000 PTS</span>
+                </div>
+                <div class="progress-container mb-4">
+                    <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 text-center">
+            <h2 class="font-impact italic text-2xl md:text-3xl text-[#a3e635] mb-6 uppercase">🎡 Ruleta de la Suerte</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white/5 p-6 md:p-10 rounded-[30px] border border-[#a3e635]/20">
+                <div class="roulette-container">
+                    <div class="marker"></div>
+                    <canvas id="wheelCanvas" width="320" height="320"></canvas>
+                    <div class="center-hub">
+                        <img src="img/logo_riven.webp" alt="Logo" onerror="this.src='img/logo_riven.png'">
+                    </div>
+                </div>
+                <div class="text-left space-y-4">
+                    <div id="status-giro" class="bg-black/50 p-4 rounded-xl border border-white/10">
+                        <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Estado de Giros</p>
+                        <p id="giro-msg" class="text-xs font-bold text-white">Cargando...</p>
+                    </div>
+                    <p class="text-[10px] text-gray-400 italic">Cada giro cuesta <span class="text-white font-bold">50 PUNTOS</span>.</p>
+                    <button id="spin-btn" onclick="spinWheel()" class="btn-disabled w-full py-4 rounded-2xl font-black text-lg italic uppercase tracking-tighter transition-all">¡GIRAR AHORA!</button>
+                </div>
+            </div>
+        </section>
+
+        <h3 class="font-impact italic text-2xl text-[#a3e635] mb-6 uppercase text-center">🎁 Canje de Puntos</h3>
+        <div id="catalog-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            </div>
+
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { 
+            apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", 
+            authDomain: "rivenflawstore.firebaseapp.com", 
+            projectId: "rivenflawstore", 
+            storageBucket: "rivenflawstore.firebasestorage.app", 
+            messagingSenderId: "251566538187", 
+            appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" 
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let userPoints = 0, userSaldo = 0, userGiros = 0, userId = "", userName = "";
+
+        const prizes = [
+            { n: "6160 DIAMANTES", p: 0, c: "#ffd700" },
+            { n: "CRUNCHYROLL", p: 3, c: "#ff8200" },
+            { n: "PASE BOOYAH", p: 3, c: "#a3e635" },
+            { n: "BONO S/ 0.10", p: 1, c: "#22c55e" },
+            { n: "SIGUE INTENTANDO", p: 20, c: "#333" },
+            { n: "CUPÓN 2%", p: 10, c: "#444" },
+            { n: "110 DIAMANTES", p: 0, c: "#00f2ff" },
+            { n: "MALA SUERTE", p: 15, c: "#1a1a1a" },
+            { n: "NETFLIX 1 MES", p: 1, c: "#e50914" },
+            { n: "MALA SUERTE", p: 15, c: "#1a1a1a" },
+            { n: "PASE SEMANAL", p: 0, c: "#0066ff" },
+            { n: "MALA SUERTE", p: 15, c: "#1a1a1a" },
+            { n: "CUPÓN 1%", p: 15, c: "#555" },
+            { n: "CUPÓN 50%", p: 0, c: "#ff00ff" },
+            { n: "DISNEY+ 1 MES", p: 2, c: "#002d72" }
+        ];
+
+        const catalog = [
+            { name: "Bono S/ 0.10", cost: 50, img: "bono_010.webp", auto: true, type: "money", val: 0.10 },
+            { name: "Cupón 1% Desc.", cost: 60, img: "cupon_1.webp", auto: true, type: "coupon", val: 1 },
+            { name: "Crunchyroll x 1 mes", cost: 100, img: "crunchyroll.webp", auto: false },
+            { name: "Cupón 2% Desc.", cost: 120, img: "cupon_2.webp", auto: true, type: "coupon", val: 2 },
+            { name: "55 Diamantes MLBB", cost: 145, img: "ml_55.webp", auto: false },
+            { name: "110 Diamantes FF", cost: 250, img: "ff_110.webp", auto: false },
+            { name: "Disney+ x 1 mes", cost: 280, img: "disney.webp", auto: false },
+            { name: "Pase Booyah FF", cost: 290, img: "booyah.webp", auto: false },
+            { name: "Pase Semanal FF/MLBB", cost: 320, img: "semanal_ff.webp", auto: false },
+            { name: "Netflix x 1 mes", cost: 340, img: "netflix.webp", auto: false },
+            { name: "257 Diamantes MLBB", cost: 520, img: "ml_257.webp", auto: false },
+            { name: "572 Diamantes FF", cost: 580, img: "ff_572.webp", auto: false },
+            { name: "Cupón 50% Desc.", cost: 7250, img: "cupon_50.webp", auto: true, type: "coupon", val: 50 },
+            { name: "6160 Diamantes FF", cost: 21000, img: "ff_6160.webp", auto: false },
+            { name: "2901 Diamantes MLBB", cost: 21145, img: "ml_2901.webp", auto: false }
+        ];
+
+        function drawWheel() {
+            const canvas = document.getElementById('wheelCanvas');
+            const ctx = canvas.getContext('2d');
+            const slice = (Math.PI * 2) / prizes.length;
+            ctx.clearRect(0,0,320,320);
+            prizes.forEach((p, i) => {
+                const angle = slice * i;
+                ctx.beginPath();
+                ctx.fillStyle = p.c;
+                ctx.moveTo(160, 160);
+                ctx.arc(160, 160, 155, angle, angle + slice);
+                ctx.fill();
+                ctx.save();
+                ctx.translate(160, 160);
+                ctx.rotate(angle + slice / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "white";
+                ctx.font = "bold 11px Arial";
+                ctx.shadowBlur = 4; ctx.shadowColor = "black";
+                ctx.fillText(p.n, 145, 5);
+                ctx.restore();
+            });
+        }
+        setTimeout(drawWheel, 100);
+
+        function renderCatalog() {
+            const container = document.getElementById('catalog-container');
+            container.innerHTML = catalog.map(item => `
+                <div class="reward-card" data-cost="${item.cost}">
+                    <div class="absolute top-2 right-2 bg-[#a3e635] text-black px-2 py-0.5 rounded-lg font-black text-[9px] z-10">${item.cost} PTS</div>
+                    <img src="img/premios/${item.img}" class="reward-img" alt="${item.name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3258/3258497.png'">
+                    <h3 class="text-[10px] font-bold uppercase italic mb-3 leading-tight">${item.name}</h3>
+                    <div class="btn-canje btn-disabled" onclick="handleClaim('${item.name}', ${item.cost}, ${item.auto}, '${item.type || ""}', ${item.val || 0})">Cargando...</div>
+                </div>
+            `).join('');
+        }
+        renderCatalog();
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                const docSnap = await getDoc(doc(db, "usuarios", userId));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    userPoints = parseInt(data.puntos || 0);
+                    userSaldo = parseFloat(data.saldo || 0);
+                    userGiros = parseInt(data.giros_usados || 0);
+                    userName = data.nombre || "Gamer";
+                    updateUI();
+                }
+            } else { window.location.href = "login.html"; }
+        });
+
+        function updateUI() {
+            document.getElementById('points-display').innerText = userPoints;
+            document.getElementById('nav-points').innerText = `${userPoints} PTS ⭐️`;
+            document.getElementById('nav-name').innerText = `HOLA, ${userName.split(' ')[0]}`;
+            
+            const spinBtn = document.getElementById('spin-btn');
+            const giroMsg = document.getElementById('giro-msg');
+
+            let nivel = 1;
+            if (userSaldo >= 1000) nivel = 20;
+            else if (userSaldo >= 60) nivel = 10;
+            const girosPermitidos = (nivel >= 20) ? 3 : (nivel >= 10) ? 2 : 1;
+
+            if (userGiros < girosPermitidos && userPoints >= 50) {
+                spinBtn.className = "btn-active w-full py-4 rounded-2xl font-black text-xl italic uppercase";
+                giroMsg.innerHTML = `NIVEL ${nivel}: Tienes ${girosPermitidos - userGiros} giro(s).`;
+            } else {
+                spinBtn.className = "btn-disabled w-full py-4 rounded-2xl font-black text-xl italic uppercase";
+                giroMsg.innerText = userPoints < 50 ? "Necesitas 50 pts." : "Giros agotados.";
+            }
+
+            document.querySelectorAll('.reward-card').forEach(card => {
+                const cost = parseInt(card.getAttribute('data-cost'));
+                const btn = card.querySelector('.btn-canje');
+                if (userPoints >= cost) {
+                    btn.className = "btn-canje btn-active";
+                    btn.innerText = "CANJEAR AHORA";
+                } else {
+                    btn.className = "btn-canje btn-disabled";
+                    btn.innerText = `FALTAN ${cost - userPoints} PTS`;
+                }
+            });
+        }
+
+        window.spinWheel = async function() {
+            const spinBtn = document.getElementById('spin-btn');
+            if (spinBtn.classList.contains('btn-disabled')) return;
+            
+            spinBtn.classList.replace('btn-active', 'btn-disabled');
+            spinBtn.innerText = "GIRANDO...";
+
+            let pool = [];
+            prizes.forEach((p, index) => { for (let i = 0; i < p.p; i++) pool.push(index); });
+            
+            // LA SUERTE SE CALCULA JUSTO AL HACER CLIC
+            const winnerIdx = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : 7;
+            const premio = prizes[winnerIdx].n;
+
+            const anglePerPrize = 360 / prizes.length;
+            const extraDegrees = (3600 * (userGiros + 1)) + (270 - (winnerIdx * anglePerPrize) - (anglePerPrize / 2));
+            
+            document.getElementById('wheelCanvas').style.transform = `rotate(${extraDegrees}deg)`;
+
+            setTimeout(async () => {
+                const userRef = doc(db, "usuarios", userId);
+                let updateData = { puntos: increment(-50), giros_usados: increment(1) };
+                let esAutomatico = false;
+
+                if (premio === "BONO S/ 0.10") {
+                    updateData.saldo = increment(0.10);
+                    esAutomatico = true;
+                } else if (premio.includes("CUPÓN")) {
+                    const val = premio.includes("1%") ? 1 : 2;
+                    updateData.cupon_activo = val;
+                    esAutomatico = true;
+                }
+
+                // REGISTRO DE SEGURIDAD RIVEN FLAW
+                if (premio !== "SIGUE INTENTANDO" && premio !== "MALA SUERTE") {
+                    await addDoc(collection(db, "historial_premios"), {
+                        nombreUsuario: userName,
+                        userId: userId,
+                        premio: premio,
+                        fecha: new Date()
+                    });
+                }
+
+                await updateDoc(userRef, updateData);
+
+                if (esAutomatico) {
+                    alert(`¡FELICIDADES! Ganaste ${premio}. Se ha aplicado automáticamente a tu cuenta.`);
+                    window.location.reload();
+                } else {
+                    alert(`¡GANASTE: ${premio}!`);
+                    if (premio !== "SIGUE INTENTANDO" && premio !== "MALA SUERTE") {
+                        window.open(`https://wa.me/51940511991?text=¡Hola Riven! Gané ${premio} en la ruleta. Soy ${userName}`, '_blank');
+                    }
+                    window.location.reload();
+                }
+            }, 5500);
+        }
+
+        window.handleClaim = async function(name, cost, isAuto, type, val) {
+            if (userPoints < cost) return;
+
+            if (isAuto) {
+                const userRef = doc(db, "usuarios", userId);
+                let updateData = { puntos: increment(-cost) };
+                
+                if (type === "money") updateData.saldo = increment(val);
+                if (type === "coupon") updateData.cupon_activo = val;
+
+                await updateDoc(userRef, updateData);
+                alert(`¡Canje exitoso! El ${name} se ha aplicado a tu cuenta.`);
+                window.location.reload();
+            } else {
+                window.open(`https://wa.me/51940511991?text=Hola Riven, canjeo ${cost} pts por ${name}. Soy ${userName}`, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>

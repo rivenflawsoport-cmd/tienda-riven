@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Emotes Premium</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #0b0b0b; color: white; margin: 0; overflow-x: hidden; }
+        .font-impact { font-family: 'Montserrat', sans-serif; }
+
+        /* HEADER Y BARRAS */
+        .user-bar-hybrid {
+            background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid rgba(163, 230, 53, 0.5);
+            padding: 12px 15px; position: fixed; top: 25px; width: 100%; z-index: 101;
+            display: flex; justify-content: center; backdrop-filter: blur(10px);
+        }
+        .live-sales-bar {
+            background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(163, 230, 53, 0.2);
+            padding: 6px 0; overflow: hidden; white-space: nowrap; width: 100%;
+            position: fixed; top: 78px; z-index: 100;
+        }
+        .sales-track { display: inline-block; animation: tickerScroll 50s linear infinite; font-size: 10px; font-weight: 800; color: #a3e635; text-transform: uppercase; }
+        .sales-track span { margin-right: 50px; }
+        @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .top-trust-bar {
+            background: #a3e635; color: black; padding: 5px 0; overflow: hidden; 
+            white-space: nowrap; font-weight: 800; text-transform: uppercase; 
+            font-size: 9px; position: fixed; top: 0; width: 100%; z-index: 110;
+        }
+
+        .btn-back-floating {
+            position: fixed; top: 125px; left: 15px; z-index: 100;
+            background: rgba(163, 230, 53, 0.9); color: black;
+            width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.5); cursor: pointer;
+        }
+
+        .btn-recarga-top {
+            background: #25D366; color: white; padding: 3px 10px; border-radius: 6px;
+            font-weight: 900; font-size: 10px; text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); margin-left: 8px;
+        }
+
+        .ff-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.3; }
+        .main-wrapper { max-width: 1200px; margin: 0 auto; padding: 140px 10px 40px 10px; }
+
+        /* GRID */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .product-card { 
+            background: #fff; border-radius: 12px; overflow: hidden; 
+            border: 1px solid rgba(163, 230, 53, 0.2); position: relative; 
+            display: flex; flex-direction: column; cursor: pointer; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .product-card:hover { transform: scale(1.05); z-index: 10; border-color: #a3e635; }
+        
+        .img-box { width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: #000; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .product-card:hover .img-box img { transform: scale(1.1); }
+        
+        .product-info { padding: 10px; text-align: center; flex-grow: 1; }
+        .product-name { color: #111; font-weight: 800; text-transform: uppercase; font-size: 10px; line-height: 1.1; margin-bottom: 5px; height: 22px; overflow: hidden; }
+        
+        /* DIAMOND TAG MEJORADO (MÁS GRANDE Y VISIBLE) */
+        .diamond-tag { 
+            display: inline-block; 
+            background: #e0f2fe; 
+            color: #0369a1; 
+            font-size: 11px; 
+            font-weight: 900; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            margin-bottom: 6px; 
+            border: 1.5px solid #7dd3fc;
+            text-transform: uppercase;
+        }
+
+        .current-price { color: #f97316; font-weight: 900; font-size: 1.2rem; }
+        
+        .badge-premium { position: absolute; top: 6px; left: 6px; background: #ff0000; color: white; font-weight: 900; padding: 2px 6px; border-radius: 4px; font-size: 8px; z-index: 10; }
+        .btn-comprar { background: #f97316; color: white; padding: 8px; font-weight: 800; width: 100%; font-size: 11px; text-transform: uppercase; }
+
+        /* MODALES */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 200; align-items: center; justify-content: center; padding: 15px; }
+        .modal-box { background: #1a1a1a; border: 2px solid #a3e635; padding: 25px; border-radius: 24px; width: 100%; max-width: 360px; text-align: center; position: relative; }
+        
+        .contenedor-terminos { 
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
+            margin-bottom: 20px; background: rgba(255,255,255,0.05); 
+            padding: 12px; border-radius: 12px; border: 1px solid rgba(163, 230, 53, 0.2);
+        }
+        #check-terminos { width: 22px; height: 22px; cursor: pointer; accent-color: #a3e635; }
+        .btn-pago-disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; filter: grayscale(1); }
+    </style>
+</head>
+<body>
+    <div class="top-trust-bar">
+        <div class="trust-ticker">🛡️ SEGURIDAD TOTAL — ✅ 100% CONFIABLE — ⭐ GARANTÍA RIVEN — ⚡ ENTREGA INMEDIATA — 🛡️ SEGURIDAD TOTAL</div>
+    </div>
+
+    <div class="user-bar-hybrid">
+        <div id="user-status-container" class="w-full flex justify-between items-center px-2">
+            <div id="guest-view" class="flex justify-between items-center w-full">
+                <span class="text-[10px] text-gray-400 font-bold uppercase italic">Aprovecha precios Riven →</span>
+                <a href="login.html" class="bg-[#a3e635] text-black px-3 py-1 rounded text-[10px] font-black">LOGIN</a>
+            </div>
+            <div id="member-view" class="hidden justify-between items-center w-full">
+                <div class="flex flex-col">
+                    <span id="display-name" class="font-bold italic uppercase text-[11px] text-white"></span>
+                    <div class="flex items-center">
+                        <a href="historial.html" class="text-[8px] text-gray-400 font-bold mr-2 uppercase">🕒 Historial</a>
+                        <a href="https://wa.me/51940511991?text=Hola%20Riven,%20deseo%20recargar%20mi%20saldo" class="btn-recarga-top">➕ Recargar</a>
+                    </div>
+                </div>
+                <span id="display-balance" class="text-[#ff4d4d] font-black text-sm"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="live-sales-bar">
+        <div id="dynamic-sales-track" class="sales-track"></div>
+    </div>
+
+    <div onclick="window.history.back()" class="btn-back-floating">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </div>
+
+    <img src="img/fondo_ff.webp" class="ff-background" onerror="this.src='img/fondo_ff.jpg'">
+
+    <div class="main-wrapper">
+        <h1 class="text-center font-impact italic text-2xl text-[#a3e635] mb-6 tracking-widest uppercase">🎭 EMOTES <span class="text-white">PREMIUM</span></h1>
+        <div class="product-grid" id="grid-emotes"></div>
+    </div>
+
+    <div id="modal-pago" class="modal-overlay">
+        <div class="modal-box">
+            <h3 class="text-[#a3e635] font-impact italic text-xl mb-2 uppercase" id="modal-titulo"></h3>
+            <p class="text-[10px] text-gray-400 uppercase mb-4 italic">Confirmar vía WhatsApp</p>
+            <p class="text-3xl font-black text-white mb-4">S/ <span id="modal-precio"></span></p>
+
+            <div class="contenedor-terminos">
+                <input type="checkbox" id="check-terminos" onchange="window.toggleTerminos()">
+                <label for="check-terminos" class="text-[10px] text-gray-300 uppercase font-bold cursor-pointer">
+                    Acepto los <a href="terminos.html" class="text-[#a3e635] underline">términos y condiciones</a>
+                </label>
+            </div>
+
+            <img src="img/qr_yape.webp" class="w-40 h-40 mx-auto mb-4 border-2 border-[#a3e635] rounded-lg" onerror="this.src='img/qr_yape.jpeg'">
+            
+            <button id="btn-ws" onclick="window.pagarWS()" class="w-full bg-[#a3e635] text-black p-4 rounded-lg font-black uppercase btn-pago-disabled">HABLAR CON RIVEN</button>
+            <button onclick="cerrarModal()" class="mt-4 text-gray-500 text-[10px] underline uppercase font-bold">Cerrar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", authDomain: "rivenflawstore.firebaseapp.com", projectId: "rivenflawstore", storageBucket: "rivenflawstore.firebasestorage.app", messagingSenderId: "251566538187", appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('display-name').innerText = `HOLA, ${data.nombre.split(' ')[0]}`;
+                    document.getElementById('display-balance').innerText = `S/. ${parseFloat(data.saldo || 0).toFixed(2)}`;
+                    document.getElementById('guest-view').classList.add('hidden');
+                    document.getElementById('member-view').classList.remove('hidden');
+                    document.getElementById('member-view').classList.add('flex');
+                }
+            }
+        });
+
+        window.toggleTerminos = () => {
+            const isChecked = document.getElementById('check-terminos').checked;
+            document.getElementById('btn-ws').classList.toggle('btn-pago-disabled', !isChecked);
+        };
+
+        window.pagarWS = () => {
+            const msg = `*COMPRA RIVEN FLAW*\n🎭 PRODUCTO: ${window.itemSel}\n💰 PAGO: S/ ${window.precioSel}`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+    </script>
+
+    <script>
+        const emotes = [
+            { id: 23, nom: "EMOTE ALOK", pre: "11.00", p: true }, { id: 22, nom: "TRONO FFWC", pre: "11.00", p: true }, { id: 21, nom: "TE QUIERO", pre: "11.00", p: true }, { id: 20, nom: "FLORES DEL AMOR", pre: "11.00", p: true }, { id: 19, nom: "MUERDE EL POLVO", pre: "11.00", p: true }, { id: 18, nom: "HORA DE COFFEE", pre: "11.00", p: true }, { id: 17, nom: "LLUVIA DE DINERO", pre: "11.00", p: true }, { id: 16, nom: "KUNG FU", pre: "11.00", p: true }, { id: 15, nom: "TIBURONCITO", pre: "8.50" }, { id: 14, nom: "AMENAZA", pre: "8.50" }, { id: 13, nom: "SHUFFLING", pre: "8.50" }, { id: 12, nom: "SALUDO", pre: "7.50" }, { id: 11, nom: "APLAUSOS", pre: "7.50" }, { id: 10, nom: "PROVOCACIÓN", pre: "7.50" }, { id: 9, nom: "MANOS DE LUJO", pre: "8.50" }, { id: 8, nom: "PROVOCALO", pre: "8.50" }, { id: 7, nom: "BAILA CONMIGO", pre: "8.50" }, { id: 6, nom: "EL CISNE", pre: "8.50" }, { id: 5, nom: "BAILE DEL INFLABLE", pre: "8.50" }, { id: 4, nom: "WINGGLE-WINGGLE", pre: "8.50" }, { id: 3, nom: "PATEA LUNAS", pre: "8.50" }, { id: 2, nom: "JUEGO PELIGROSO", pre: "10.00" }, { id: 1, nom: "ABANIQUEO", pre: "10.00" }
+        ];
+
+        function getD(p) { if(p=="11.00") return "599"; if(p=="10.00") return "499"; if(p=="8.50") return "399"; return "349"; }
+
+        const grid = document.getElementById('grid-emotes');
+        window.itemSel = ""; window.precioSel = "";
+
+        emotes.forEach(em => {
+            let b = em.p ? `<div class="badge-premium">PREMIUM 🔥</div>` : '';
+            grid.innerHTML += `<div class="product-card" onclick="abrirModal('${em.nom}', '${em.pre}')">${b}<div class="img-box"><img src="img/ff_emotes/em${em.id}.webp" onerror="this.src='img/ff_emotes/em${em.id}.jpeg'"></div><div class="product-info"><h3 class="product-name">${em.nom}</h3><div class="diamond-tag">💎 ${getD(em.pre)} Diams</div><p class="current-price">S/ ${em.pre}</p></div><button class="btn-comprar">ADQUIRIR</button></div>`;
+        });
+
+        function abrirModal(n, p) {
+            window.itemSel = n; window.precioSel = p;
+            document.getElementById('modal-titulo').innerText = n;
+            document.getElementById('modal-precio').innerText = p;
+            document.getElementById('check-terminos').checked = false;
+            window.toggleTerminos();
+            document.getElementById('modal-pago').style.display = 'flex';
+        }
+        function cerrarModal() { document.getElementById('modal-pago').style.display = 'none'; }
+
+        const track = document.getElementById('dynamic-sales-track');
+        track.innerHTML = "<span>🚀 Riven envió Emote ✅</span><span>🚀 Nuevo pedido de Trono completado ✅</span>".repeat(5);
+    </script>
+</body>
+</html>

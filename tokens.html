@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Tokens Evolutivos</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Rajdhani', sans-serif; background-color: #0b0b0b; color: white; margin: 0; padding: 0; overflow-x: hidden; }
+        .font-impact { font-family: 'Montserrat', sans-serif; }
+        .btn-back { position: fixed; top: 15px; left: 15px; z-index: 1001; background: #a3e635; color: black; width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(163, 230, 53, 0.5); text-decoration: none; }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+        
+        .product-card { 
+            background: #111; border-radius: 12px; overflow: hidden; 
+            border: 1px solid rgba(163, 230, 53, 0.2); display: flex; flex-direction: column; cursor: pointer; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
+        }
+        .product-card:hover { transform: scale(1.05); border-color: #a3e635; z-index: 10; box-shadow: 0 0 20px rgba(163, 230, 53, 0.2); }
+        
+        .img-box { width: 100%; aspect-ratio: 16 / 10; background: #000; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+        .product-card:hover .img-box img { transform: scale(1.1); }
+
+        .product-info { padding: 10px; text-align: center; background: #1a1a1a; }
+        .product-name { font-weight: 800; font-size: 10px; text-transform: uppercase; color: #fff; height: 24px; line-height: 1.1; overflow: hidden; }
+        .btn-buy { background: #a3e635; color: black; padding: 10px; text-align: center; font-weight: 900; font-size: 11px; }
+        
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 120; align-items: center; justify-content: center; padding: 15px; }
+        .modal-box { background: #1a1a1a; border: 2px solid #a3e635; padding: 25px; border-radius: 24px; max-width: 380px; width: 100%; text-align: center; }
+        .select-btn { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(163, 230, 53, 0.3); border-radius: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+        .user-bar { background: rgba(0,0,0,0.9); border-bottom: 1px solid #a3e635; padding: 10px; text-align: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+
+        /* --- CORRECCIÓN DE DISEÑO DE TÉRMINOS --- */
+        .btn-pago-disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; filter: grayscale(1); }
+        .contenedor-terminos { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            margin: 20px 0; 
+            background: rgba(255,255,255,0.08); 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(163, 230, 53, 0.3); 
+        }
+        #check-terminos { width: 20px; height: 20px; accent-color: #a3e635; cursor: pointer; flex-shrink: 0; }
+        .texto-check { font-size: 11px; color: white; font-weight: 700; text-transform: uppercase; text-align: left; line-height: 1.2; }
+    </style>
+</head>
+<body>
+
+    <div class="user-bar">
+        <span id="user-display" class="text-[#a3e635] font-bold text-[11px] uppercase italic">RIVEN FLAW | SECCIÓN TOKENS</span>
+    </div>
+
+    <a href="index.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+
+    <header class="py-10 text-center">
+        <h1 class="font-impact italic text-4xl text-white uppercase tracking-tighter">TOKENS <span class="text-[#a3e635]">EVO</span></h1>
+        <p class="text-[9px] text-gray-500 font-bold tracking-[0.3em] uppercase mt-1">Riven Flaw Official Stock</p>
+    </header>
+
+    <div class="product-grid" id="grid-tokens"></div>
+
+    <div id="modal-cantidades" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="token-titulo" class="text-[#a3e635] font-impact italic text-xl mb-4 uppercase">CANTIDADES</h3>
+            <div id="opciones-lista" class="space-y-2"></div>
+            <button onclick="window.cerrarModales()" class="mt-4 text-gray-500 text-xs underline uppercase">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="modal-datos" class="modal-overlay">
+        <div class="modal-box">
+            <h3 class="text-[#a3e635] font-impact italic text-xl mb-4 uppercase tracking-tighter">DATOS DEL JUGADOR</h3>
+            <input type="text" id="player-id" placeholder="ID DEL JUGADOR" class="w-full p-4 bg-black border border-gray-700 rounded-xl mb-4 text-center text-white font-bold outline-none uppercase">
+            <div class="flex gap-2">
+                <button onclick="window.volverACantidad()" class="flex-1 bg-gray-800 text-white p-3 rounded-lg font-bold text-xs uppercase">Volver</button>
+                <button onclick="window.irAPagar()" class="flex-1 bg-[#a3e635] text-black p-3 rounded-lg font-bold text-xs uppercase">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-pago" class="modal-overlay">
+        <div class="modal-box text-white">
+            <h3 class="text-[#a3e635] font-bold text-lg mb-2 uppercase italic tracking-tighter">HABLAR CON RIVEN</h3>
+            <p id="resumen-item" class="text-[10px] text-gray-400 uppercase mb-1"></p>
+            <div class="text-3xl font-black mb-4">S/ <span id="pago-monto"></span></div>
+
+            <div class="contenedor-terminos">
+                <input type="checkbox" id="check-terminos" onchange="window.toggleTerminos()">
+                <label for="check-terminos" class="texto-check">
+                    Acepto los <a href="terminos.html" class="text-[#a3e635] underline">Términos y Condiciones</a>
+                </label>
+            </div>
+
+            <img src="img/qr_yape.webp" class="w-32 h-32 mx-auto mb-4 border-2 border-[#a3e635] rounded-lg" onerror="this.src='img/qr_yape.jpeg'">
+            
+            <button id="btn-whatsapp" onclick="window.finalizarWhatsApp()" class="w-full bg-[#a3e635] text-black p-4 rounded-lg font-black uppercase btn-pago-disabled transition-all">PEDIR POR WHATSAPP</button>
+            
+            <button onclick="window.cerrarModales()" class="mt-4 text-gray-500 text-[10px] underline font-bold uppercase tracking-widest">Regresar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        window.tokenSeleccionado = ""; window.cantidadSeleccionada = ""; window.precioBase = 0; window.precioFinal = 0;
+
+        window.toggleTerminos = function() {
+            const isChecked = document.getElementById('check-terminos').checked;
+            document.getElementById('btn-whatsapp').classList.toggle('btn-pago-disabled', !isChecked);
+        };
+
+        const lista = ["Token Fragmento Evolutivo", "Token Escorpión", "Token Galaxia a Medida", "Token PB T13", "Token PB T12", "Token PB T11", "Token PB T10", "Token PB T9", "Token PB T8", "Token PB T7", "Token PB T6", "Token PB T5", "Token PB T4", "Token PB T3", "Token PB T2", "Token PB T1", "Token de Runas", "Token Hiperlibro Galaxia", "Token Hiperlibro Revolución"];
+        const escalas = [{ c: "100 UNIDADES", p: 19.99 }, { c: "150 UNIDADES", p: 29.99 }, { c: "200 UNIDADES", p: 37.99 }, { c: "300 UNIDADES", p: 54.99 }, { c: "500 UNIDADES", p: 89.99 }, { c: "1000 UNIDADES", p: 174.99 }];
+
+        window.renderTokens = () => {
+            const grid = document.getElementById('grid-tokens');
+            grid.innerHTML = lista.map((n, i) => `
+                <div class="product-card" onclick="window.abrirOpciones('${n}')">
+                    <div class="img-box"><img src="img/ff_tokens/t${i+1}.webp" onerror="this.src='img/ff_tokens/t${i+1}.jpeg'"></div>
+                    <div class="product-info"><h3 class="product-name">${n}</h3></div>
+                    <div class="btn-buy">ADQUIRIR</div>
+                </div>`).join('');
+        };
+        window.renderTokens();
+
+        window.abrirOpciones = (n) => {
+            window.tokenSeleccionado = n;
+            document.getElementById('token-titulo').innerText = n;
+            const container = document.getElementById('opciones-lista');
+            container.innerHTML = escalas.map(e => `<button class="select-btn" onclick="window.seleccionarEscala('${e.c}', ${e.p})"><span>${e.c}</span><span class="text-[#a3e635]">S/ ${e.p.toFixed(2)}</span></button>`).join('');
+            document.getElementById('modal-cantidades').style.display = 'flex';
+        };
+
+        window.seleccionarEscala = (c, p) => {
+            window.cantidadSeleccionada = c; window.precioBase = p;
+            document.getElementById('modal-cantidades').style.display = 'none';
+            document.getElementById('modal-datos').style.display = 'flex';
+        };
+
+        window.irAPagar = () => {
+            const pid = document.getElementById('player-id').value;
+            if (!pid) { alert("¡Ingresa el ID del jugador!"); return; }
+            document.getElementById('check-terminos').checked = false;
+            window.toggleTerminos();
+            window.precioFinal = window.precioBase;
+            document.getElementById('pago-monto').innerText = window.precioFinal.toFixed(2);
+            document.getElementById('resumen-item').innerText = `${window.cantidadSeleccionada} DE ${window.tokenSeleccionado}`;
+            document.getElementById('modal-datos').style.display = 'none';
+            document.getElementById('modal-pago').style.display = 'flex';
+        };
+
+        window.finalizarWhatsApp = () => {
+            const pid = document.getElementById('player-id').value;
+            const msg = `*RIVEN FLAW STORE - TOKENS*\nHola Riven, deseo adquirir el siguiente paquete:\n📦 ITEM: ${window.tokenSeleccionado}\n💎 CANTIDAD: ${window.cantidadSeleccionada}\n💰 MONTO: S/ ${window.precioFinal.toFixed(2)}\n⚡ ID JUGADOR: ${pid}`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+
+        window.volverACantidad = () => { document.getElementById('modal-datos').style.display = 'none'; document.getElementById('modal-cantidades').style.display = 'flex'; };
+        window.cerrarModales = () => { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); };
+    </script>
+</body>
+</html>

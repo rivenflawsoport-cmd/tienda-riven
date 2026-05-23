@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RIVEN FLAW | Tienda Oficial</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,900&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Rajdhani', sans-serif; 
+            background-color: #0b0b0b; 
+            margin: 0; 
+            padding: 0; 
+            color: white; 
+            overflow-x: hidden; 
+        }
+
+        /* BARRA DE USUARIO HÍBRIDA */
+        .user-bar-hybrid {
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid rgba(163, 230, 53, 0.5);
+            padding: 12px 20px;
+            position: fixed;
+            top: 25px;
+            width: 100%;
+            z-index: 101;
+            display: flex;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        #display-balance { font-size: 14px; color: #ff4d4d; font-weight: 800; margin-left: 10px; }
+
+        /* ESTILO PARA EL BOTÓN DE RECARGA EN BARRA SUPERIOR */
+        .btn-recarga-top {
+            background: #25D366;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 10px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+            transition: 0.3s;
+            margin-left: 5px;
+            display: inline-block;
+        }
+        .btn-recarga-top:active { transform: scale(0.9); }
+
+        .rango-bronce { color: #cd7f32 !important; }
+        .rango-plata { color: #c0c0c0 !important; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        .rango-oro { color: #ffd700 !important; text-shadow: 0 0 10px rgba(255,215,0,0.6); font-weight: 800; }
+
+        .live-sales-bar {
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid rgba(163, 230, 53, 0.2);
+            padding: 6px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            position: fixed;
+            top: 90px;
+            z-index: 100;
+        }
+        
+        @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        
+        .sales-track {
+            display: inline-block;
+            animation: tickerScroll 40s linear infinite;
+            font-size: 10px;
+            font-weight: 800;
+            color: #a3e635;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .sales-track span { margin-right: 80px; display: inline-flex; align-items: center; gap: 8px; }
+
+        .btn-back-floating {
+            position: fixed; top: 130px; left: 15px; z-index: 100;
+            background: rgba(163, 230, 53, 0.9); color: black;
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.5); text-decoration: none;
+            transition: 0.3s; border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .ff-background { 
+            position: fixed; top: -5%; left: -5%; width: 110%; height: 110%; 
+            object-fit: cover; z-index: -1; opacity: 0.4; 
+            animation: backgroundZoom 20s linear infinite alternate;
+        }
+        @keyframes backgroundZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+        .top-trust-bar {
+            background: #a3e635; color: black; padding: 5px 0; overflow: hidden; 
+            white-space: nowrap; font-weight: 800; text-transform: uppercase; 
+            font-size: 10px; letter-spacing: 1px; box-shadow: 0 0 15px #a3e635; 
+            position: fixed; top: 0; width: 100%; z-index: 110;
+        }
+        .trust-ticker { display: inline-block; animation: tickerScroll 25s linear infinite; }
+
+        header {
+    background: rgba(17, 17, 17, 0.9); backdrop-filter: blur(10px);
+    padding: 130px 10px 15px 10px; text-align: center;
+    border-bottom: 2px solid #a3e635; 
+    z-index: 50;
+}
+
+        .main-wrapper { max-width: 1300px; margin: 0 auto; padding: 10px; }
+        .content-layout { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+
+        .sidebar-container { width: 220px; flex-shrink: 0; }
+        @media (max-width: 1024px) { .sidebar-container { display: none; } }
+        
+        .sidebar { 
+            position: sticky; top: 180px; background: rgba(0, 0, 0, 0.9); 
+            border-radius: 20px; padding: 18px; border: 1px solid rgba(163, 230, 53, 0.3); 
+        }
+        .side-item { 
+            display: flex; align-items: center; gap: 10px; padding: 12px 15px; 
+            border-radius: 12px; margin-bottom: 8px; font-weight: 800; color: #fff; 
+            transition: 0.3s; font-size: 14px; text-decoration: none; 
+            border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.03);
+        }
+        .side-item:hover { background: #a3e635; color: black; transform: translateX(8px); }
+
+        .slider-container { width: 100%; max-width: 1000px; overflow: hidden; padding: 20px 0; position: relative; margin: 0 auto; }
+        .slider-track { display: flex; width: max-content; gap: 15px; animation: scrollSlider 25s linear infinite; }
+        @keyframes scrollSlider { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .showcase-card { flex-shrink: 0; width: 280px; height: 160px; border-radius: 15px; overflow: hidden; border: 2px solid rgba(163, 230, 53, 0.3); cursor: pointer; position: relative; }
+        .showcase-img { width: 100%; height: 100%; object-fit: cover; }
+        .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; }
+        .showcase-name { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 900; color: #a3e635; text-shadow: 2px 2px 0px #000; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; max-width: 850px; }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
+
+        .product-card { 
+            background: #fff; border-radius: 10px; overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; 
+            position: relative; border: 1px solid rgba(163, 230, 53, 0.2); 
+            height: 100%; cursor: pointer; transition: 0.3s;
+            animation: fadeInUp 0.5s ease backwards;
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .product-card:hover { transform: scale(1.05); border-color: #a3e635; z-index: 10; }
+        .img-box { width: 100%; aspect-ratio: 1/1; background: #111; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.5s ease; }
+
+        .product-info { padding: 6px; text-align: center; flex-grow: 1; }
+        .product-name { color: #111; font-weight: 700; font-size: 9px; text-transform: uppercase; margin-bottom: 2px; line-height: 1.1; }
+        .product-price-box { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .current-price { color: #f97316; font-weight: 900; font-size: 1rem; line-height: 1; }
+        .old-price { font-size: 10px; color: #ff3333; text-decoration: line-through; font-weight: 800; margin-right: 5px; }
+
+        .badge-desc { position: absolute; top: 4px; right: 4px; background: #ff0000; color: white; font-size: 9px; font-weight: 900; padding: 1px 5px; border-radius: 3px; z-index: 10; }
+
+        .btn-comprar { background: #f97316; color: white; padding: 6px; text-align: center; font-weight: 800; width: 100%; border: none; font-size: 10px; }
+
+        .section-title { font-size: 1.2rem; font-weight: 800; margin: 25px 0 12px 0; color: #a3e635; text-transform: uppercase; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; }
+        .section-title::after { content: ""; height: 2px; flex-grow: 1; max-width: 40px; background: #a3e635; }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 120; align-items: center; justify-content: center; padding: 15px; }
+        .modal-box { background: #1a1a1a; border: 2px solid #a3e635; padding: 20px; border-radius: 20px; max-width: 350px; width: 100%; }
+
+        .btn-pago-disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; filter: grayscale(1); }
+        .contenedor-terminos { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 12px 0; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 10px; }
+        #check-terminos { width: 18px; height: 18px; accent-color: #a3e635; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="top-trust-bar">
+        <div class="trust-ticker">🛡️ SEGURIDAD — ✅ CONFIANZA — ⭐ GARANTÍA — ⚡ RIVEN FLAW STORE — 🛡️ SEGURIDAD — ✅ CONFIANZA — ⭐ GARANTÍA — ⚡ RIVEN FLAW STORE —</div>
+    </div>
+
+    <div class="user-bar-hybrid">
+        <div id="user-status-container" class="max-w-7xl w-full flex justify-between items-center px-4">
+            <div id="guest-view" class="flex justify-between items-center w-full">
+                <span class="text-[10px] text-gray-400 font-bold uppercase italic">Usa tu saldo Riven para comprar →</span>
+                <a href="registro.html" class="bg-[#a3e635] text-black px-3 py-1 rounded text-[10px] font-black">LOGIN</a>
+            </div>
+            <div id="member-view" class="hidden justify-between items-center w-full">
+                <div class="flex items-center gap-3">
+                    <div class="flex flex-col">
+                        <span id="display-name" class="font-bold italic text-xs uppercase text-white"></span>
+                        <div class="flex items-center mt-1">
+                             <a href="historial.html" class="text-[9px] text-gray-400 font-bold hover:text-[#a3e635] mr-3">🕒 HISTORIAL</a>
+                             <a href="https://wa.me/51940511991?text=Hola%20Riven,%20deseo%20recargar%20mi%20saldo%20para%20comprar%20en%20Riven%20Flaw%20Store" class="btn-recarga-top">➕ RECARGAR SALDO</a>
+                        </div>
+                    </div>
+                    <span id="display-balance" class="font-bold italic"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="live-sales-bar">
+        <div id="dynamic-sales-track" class="sales-track"></div>
+    </div>
+
+    <a href="index.html" class="btn-back-floating">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+
+    <img src="img/fondo_ff.webp" class="ff-background" alt="background" onerror="this.src='img/fondo_ff.jpg'">
+
+    <header>
+        <h1 class="text-white font-extrabold text-2xl md:text-4xl italic uppercase tracking-widest">RIVEN <span class="text-[#a3e635]">FLAW</span></h1>
+        <p class="text-[9px] text-[#a3e635] font-bold tracking-[0.4em] mt-1 uppercase opacity-80">Oficial Store</p>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="content-layout">
+            <aside class="sidebar-container">
+                <div class="sidebar">
+                    <p class="text-[10px] text-[#a3e635] font-bold mb-4 uppercase tracking-widest px-1">Menú</p>
+                    <a href="#diamantes" class="side-item">💎 DIAMANTES</a>
+                    <a href="emotes.html" class="side-item">🎭 SECCIÓN EMOTES</a>
+                    <a href="#pases" class="side-item">🎫 PASES EVO</a>
+                    <a href="#membresias" class="side-item">💳 MEMBRESÍAS</a>
+                    <a href="#evolutivas" class="side-item">🛠️ FRAGMENTOS</a>
+                </div>
+            </aside>
+
+            <div class="flex-grow flex flex-col items-center w-full">
+                <section id="diamantes" class="w-full flex flex-col items-center">
+                    <h2 class="section-title">Diamantes</h2>
+                    <div class="product-grid" id="grid-diamantes"></div>
+                </section>
+                <section id="pases" class="w-full flex flex-col items-center">
+                    <h2 class="section-title">Pases</h2>
+                    <div class="product-grid" id="grid-pases"></div>
+                </section>
+                <section id="membresias" class="w-full flex flex-col items-center">
+                    <h2 class="section-title">Membresías</h2>
+                    <div class="product-grid" id="grid-membresias"></div>
+                </section>
+                <section id="evolutivas" class="w-full flex flex-col items-center">
+                    <h2 class="section-title">Evolutivas</h2>
+                    <div class="product-grid" id="grid-evolutivas"></div>
+                </section>
+
+                <h2 class="section-title">Más Categorías</h2>
+                <div class="slider-container">
+                    <div class="slider-track">
+                        <div class="showcase-card" onclick="window.location.href='emotes.html'"><img src="img/ff_portadas/banner_emotes.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">EMOTES</span></div></div>
+                        <div class="showcase-card" onclick="window.location.href='paquetes.html'"><img src="img/ff_portadas/banner_paquetes.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">PAQUETES</span></div></div>
+                        <div class="showcase-card" onclick="window.location.href='tokens.html'"><img src="img/ff_portadas/banner_tokens.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">TOKENS</span></div></div>
+                        <div class="showcase-card" onclick="window.location.href='cuentas.html'"><img src="img/ff_portadas/cuentas_ff.webp" class="showcase-img"><div class="showcase-overlay"><span class="showcase-name">CUENTAS</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-datos" class="modal-overlay" onclick="if(event.target.id === 'modal-datos') cerrarModales()">
+        <div class="modal-box text-center">
+            <h3 class="text-[#a3e635] font-bold text-xl mb-4 uppercase italic">Datos de Envío</h3>
+            
+            <div class="flex flex-col gap-2 mb-2">
+                <input type="text" id="player-id" placeholder="ID DEL JUGADOR" class="w-full p-3 bg-black border border-gray-700 rounded-lg text-center text-white font-bold outline-none uppercase tracking-wider">
+                <button type="button" id="btn-verificar-id" onclick="window.verificarIdPagostore()" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg font-black text-xs uppercase tracking-widest transition shadow-lg">
+                    🔍 Verificar ID
+                </button>
+            </div>
+
+            <div class="mb-2 text-left">
+                <label class="text-[9px] text-gray-500 font-bold uppercase pl-1">Nick detectado automáticamente:</label>
+                <input type="text" id="player-nick" placeholder="Esperando Verificación..." readonly class="w-full p-3 bg-zinc-900 border border-zinc-800 rounded-lg text-center text-gray-400 font-extrabold outline-none uppercase cursor-not-allowed">
+            </div>
+
+            <input type="text" id="guest-code" placeholder="CÓDIGO DE INVITADO (OPCIONAL)" class="w-full p-3 bg-black border border-gray-700 rounded-lg mb-4 text-center text-[#a3e635] font-bold outline-none uppercase tracking-wider">
+            
+            <div class="flex gap-2">
+                <button onclick="cerrarModales()" class="flex-1 bg-gray-800 text-white p-3 rounded-lg font-bold text-xs uppercase">Cancelar</button>
+                <button id="btn-datos-siguiente" onclick="irAPagar()" class="flex-1 bg-[#a3e635] text-black p-3 rounded-lg font-bold text-xs uppercase btn-pago-disabled">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-pago" class="modal-overlay" onclick="if(event.target.id === 'modal-pago') cerrarModales()">
+        <div class="modal-box text-center text-white">
+            <h3 class="text-[#a3e635] font-bold text-lg mb-1 uppercase italic">Confirmar Pago</h3>
+            <div id="info-descuento" class="hidden mb-3">
+                <p class="text-xs text-[#a3e635] font-black uppercase">🔥 ¡Cupón <span id="porcentaje-desc"></span>% Aplicado!</p>
+            </div>
+            <div class="text-3xl font-black mb-4">S/ <span id="pago-monto"></span></div>
+
+            <div class="contenedor-terminos">
+                <input type="checkbox" id="check-terminos" onchange="window.toggleTerminos()">
+                <label for="check-terminos" class="text-[10px] text-gray-300 uppercase font-bold cursor-pointer">
+                    Acepto los <a href="terminos.html" class="text-[#a3e635] underline">términos y condiciones</a>
+                </label>
+            </div>
+
+            <div id="seccion-metodo-saldo" class="hidden">
+                <button id="btn-saldo" onclick="intentarPagarConSaldo()" class="w-full bg-[#ff4d4d] text-white p-3 rounded-lg font-black uppercase shadow-lg mb-2 border-b-4 border-red-950 btn-pago-disabled">Pagar con Saldo Riven</button>
+                <div class="flex items-center my-3">
+                    <div class="flex-grow border-t border-gray-800"></div>
+                    <span class="px-2 text-[9px] text-gray-500 font-bold uppercase">o también</span>
+                    <div class="flex-grow border-t border-gray-800"></div>
+                </div>
+            </div>
+
+            <button id="btn-whatsapp" onclick="finalizarCompra()" class="w-full bg-[#25D366] text-white p-4 rounded-lg font-black uppercase btn-pago-disabled flex items-center justify-center gap-2 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.06 3.973L0 16l4.104-1.076a7.839 7.839 0 0 0 3.886 1.034h.005c4.368 0 7.926-3.559 7.93-7.928a7.86 7.86 0 0 0-2.324-5.604zM7.994 14.393a6.513 6.513 0 0 1-3.333-.923l-.239-.142-2.478.65.662-2.417-.156-.248a6.51 6.51 0 0 1-1.003-3.484c.002-3.601 2.935-6.533 6.539-6.533a6.53 6.53 0 0 1 4.62 1.917 6.53 6.53 0 0 1 1.914 4.624c-.004 3.604-2.937 6.537-6.541 6.537zM11.534 10.1c-.193-.096-1.144-.564-1.32-.629-.176-.065-.306-.096-.436.1-.13.194-.503.629-.617.758-.114.13-.227.145-.42.048-.194-.096-.819-.301-1.56-.962-.576-.514-.966-1.15-1.079-1.345-.114-.194-.012-.299.084-.395.086-.087.194-.226.29-.339.098-.113.13-.193.195-.322.064-.13.033-.242-.016-.339-.049-.097-.436-1.05-.597-1.437-.157-.38-.313-.329-.43-.336-.11-.007-.238-.008-.364-.008-.126 0-.332.047-.506.237-.174.19-.664.649-.664 1.582 0 .933.678 1.834.773 1.963.094.129 1.334 2.037 3.232 2.857.452.196.804.312 1.079.399.454.144.867.123 1.194.074.364-.055 1.144-.468 1.305-1.196.16-.728.16-1.352.112-1.482-.048-.13-.176-.194-.37-.291z"/>
+                </svg>
+                Yape / WhatsApp
+            </button>
+        </div>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk", authDomain: "rivenflawstore.firebaseapp.com", projectId: "rivenflawstore", storageBucket: "rivenflawstore.firebasestorage.app", messagingSenderId: "251566538187", appId: "1:251566538187:web:ad54915d6f4a87e152ca4e" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let bloqueoActivo = false;
+
+        window.saldoUsuario = 0; window.cuponUsuario = 0; window.nombreUsuario = "";
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    window.saldoUsuario = parseFloat(data.saldo || 0);
+                    window.cuponUsuario = parseInt(data.cupon_activo || 0);
+                    window.nombreUsuario = data.nombre || "Usuario";
+                    document.getElementById('display-name').innerText = `HOLA, ${window.nombreUsuario.split(' ')[0]}`;
+                    document.getElementById('display-balance').innerText = `S/. ${window.saldoUsuario.toFixed(2)}`;
+                    document.getElementById('member-view').classList.remove('hidden');
+                    document.getElementById('guest-view').classList.add('hidden');
+                }
+            }
+        });
+
+        window.toggleTerminos = function() {
+            const isChecked = document.getElementById('check-terminos').checked;
+            const btnWS = document.getElementById('btn-whatsapp');
+            const btnSD = document.getElementById('btn-saldo');
+            if (isChecked) {
+                btnWS.classList.remove('btn-pago-disabled');
+                if(btnSD) btnSD.classList.remove('btn-pago-disabled');
+            } else {
+                btnWS.classList.add('btn-pago-disabled');
+                if(btnSD) btnSD.classList.add('btn-pago-disabled');
+            }
+        };
+
+        window.irAPagar = function() {
+            const pId = document.getElementById("player-id").value;
+            const pNick = document.getElementById("player-nick").value;
+
+            if(!pId || !pNick) { 
+                alert("¡Faltan datos! Ingresa ID y Nick."); 
+                return; 
+            }
+
+            document.getElementById('check-terminos').checked = false;
+            window.toggleTerminos();
+
+            let final = parseFloat(precioActual);
+            if (window.cuponUsuario > 0) {
+                final = final - (final * (window.cuponUsuario / 100));
+                document.getElementById('porcentaje-desc').innerText = window.cuponUsuario;
+                document.getElementById('info-descuento').classList.remove('hidden');
+            }
+
+            document.getElementById('pago-monto').innerText = final.toFixed(2);
+            window.montoFinalDesc = final; 
+
+            if(auth.currentUser) document.getElementById('seccion-metodo-saldo').classList.remove('hidden');
+            document.getElementById('modal-datos').style.display = 'none';
+            document.getElementById('modal-pago').style.display = 'flex';
+        };
+
+        window.intentarPagarConSaldo = async function() {
+            if(bloqueoActivo) return;
+            if (window.saldoUsuario < window.montoFinalDesc) {
+                alert("Saldo insuficiente.");
+                return;
+            }
+
+            if (!confirm(`¿Confirmas pagar S/ ${window.montoFinalDesc.toFixed(2)} con tu saldo?`)) return;
+
+            try {
+                bloqueoActivo = true;
+                const btnSaldo = document.getElementById("btn-saldo");
+                btnSaldo.innerText = "PROCESANDO...";
+                btnSaldo.classList.add("btn-pago-disabled");
+
+                const pId = document.getElementById("player-id").value;
+                const pNick = document.getElementById("player-nick").value.toUpperCase();
+                const gCode = document.getElementById("guest-code").value.trim().toUpperCase() || "NINGUNO";
+                const nuevoPedidoRef = doc(collection(db, "pedidos"));
+
+                // 1. REGISTRO PARA EL ADMIN (Usando 'monto' para puntos)
+                await setDoc(nuevoPedidoRef, {
+                    player_id: pId,
+                    player_nick: pNick,
+                    producto: "FREE FIRE (SALDO): " + itemActual,
+                    monto: window.montoFinalDesc, 
+                    estado: "pendiente",
+                    fecha: serverTimestamp(),
+                    fecha_hora: new Date().toLocaleString(),
+                    cliente_uid: auth.currentUser.uid,
+                    cliente_nombre: window.nombreUsuario,
+                    metodo: "Saldo Riven",
+                    codigo_invitado: gCode
+                });
+
+                // 2. DESCUENTO REAL DE SALDO
+                const usuarioRef = doc(db, "usuarios", auth.currentUser.uid);
+                await updateDoc(usuarioRef, {
+                    saldo: window.saldoUsuario - window.montoFinalDesc,
+                    cupon_activo: 0
+                });
+
+                alert("¡COMPRA EXITOSA! El pedido ya está en el sistema.");
+                location.reload();
+
+            } catch (e) {
+                console.error(e);
+                alert("Error al procesar saldo.");
+                bloqueoActivo = false;
+                document.getElementById("btn-saldo").innerText = "Pagar con Saldo Riven";
+            }
+        };
+
+        window.finalizarCompra = async function() {
+            const pId = document.getElementById("player-id").value;
+            const pNick = document.getElementById("player-nick").value.toUpperCase();
+            const gCode = document.getElementById("guest-code").value.trim().toUpperCase() || "NINGUNO";
+            try {
+                const nuevoPedidoRef = doc(collection(db, "pedidos"));
+                await setDoc(nuevoPedidoRef, {
+                    player_id: pId,
+                    player_nick: pNick,
+                    producto: "FREE FIRE: " + itemActual,
+                    monto: window.montoFinalDesc,
+                    estado: "pendiente",
+                    fecha: serverTimestamp(),
+                    fecha_hora: new Date().toLocaleString(),
+                    cliente_uid: auth.currentUser ? auth.currentUser.uid : "invitado",
+                    cliente_nombre: window.nombreUsuario || "Invitado",
+                    metodo: "WhatsApp/Yape",
+                    codigo_invitado: gCode
+                });
+            } catch (error) { console.error(error); }
+
+            const msg = `*RIVEN FLAW STORE*\n🎮 JUEGO: FREE FIRE\n💎 PRODUCTO: ${itemActual}\n⚡ ID: ${pId}\n👤 NICK: ${pNick}\n👥 INVITADO: ${gCode}\n💰 PAGO: S/ ${window.montoFinalDesc.toFixed(2)}`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
+        };
+    </script>
+
+    <script>
+        let itemActual = ""; let precioActual = "";
+        const data = {
+            diamantes: [
+                { id: 1, nom: "100 + 10 Bonus", pre: "3.49", old: "3.50", d: "0.29", f: "ff_diamantes", p: "d" },
+                { id: 2, nom: "200 + 20 Bonus", pre: "6.99", old: "7.00", d: "0.48", f: "ff_diamantes", p: "d" },
+                { id: 3, nom: "520 + 52 Bonus", pre: "15.99", old: "16.50", d: "4", f: "ff_diamantes", p: "d" },
+                { id: 4, nom: "620 + 62 Bonus", pre: "19.49", old: "21.00", d: "5", f: "ff_diamantes", p: "d" },
+                { id: 5, nom: "1,060 + 106 Bonus", pre: "31.39", old: "32.50", d: "7", f: "ff_diamantes", p: "d" },
+                { id: 6, nom: "1,580 + 158 Bonus", pre: "47.79", old: "49.00", d: "8", f: "ff_diamantes", p: "d" },
+                { id: 7, nom: "2,180 + 218 Bonus", pre: "59.99", old: "65.00", d: "10", f: "ff_diamantes", p: "d" },
+                { id: 8, nom: "3,240 + 324 Bonus", pre: "91.29", old: "97.50", d: "12", f: "ff_diamantes", p: "d" },
+                { id: 9, nom: "4,360 + 436 Bonus", pre: "119.99", old: "130.00", d: "13", f: "ff_diamantes", p: "d" },
+                { id: 10, nom: "5,600 + 560 Bonus", pre: "144.99", old: "165.00", d: "15", f: "ff_diamantes", p: "d" },
+                { id: 11, nom: "6,660 + 726 Bonus", pre: "175.99", old: "197.50", d: "15", f: "ff_diamantes", p: "d" },
+                { id: 12, nom: "7,798 + 778 Bonus", pre: "203.98", old: "230.00", d: "17", f: "ff_diamantes", p: "d" },
+                { id: 13, nom: "11,200 + 1,120 Bonus", pre: "287.98", old: "330.00", d: "18", f: "ff_diamantes", p: "d" }
+            ],
+            pases: [
+                { id: 1, nom: "Pase Booyah", pre: "6.50", old: "11.00", d: "33", f: "ff_pases", p: "p" },
+                { id: 2, nom: "Evo Access 7 días", pre: "3.70", old: "3.99", d: "0.29", f: "ff_pases", p: "p" },
+                { id: 3, nom: "Evo Access 30D", pre: "10.99", old: "11.99", d: "10", f: "ff_pases", p: "p" }
+            ],
+            membresias: [
+                { id: 1, nom: "Semanal Básica", pre: "2.20", f: "ff_membresias", p: "m" },
+                { id: 2, nom: "Semanal", pre: "6.80", f: "ff_membresias", p: "m" },
+                { id: 3, nom: "Mensual", pre: "34.00", f: "ff_membresias", p: "m" }
+            ],
+            evolutivas: [
+                { id: 1, nom: "20 Cajas", pre: "22.00", f: "ff_evolutivas", p: "e" },
+                { id: 2, nom: "40 Cajas", pre: "35.00", f: "ff_evolutivas", p: "e" },
+                { id: 3, nom: "60 Cajas", pre: "55.00", f: "ff_evolutivas", p: "e" }
+            ]
+        };
+
+        function draw(cat) { 
+            const grid = document.getElementById('grid-' + cat); 
+            data[cat].forEach(item => { 
+                let badge = item.d ? `<div class="badge-desc">-${item.d}%</div>` : ''; 
+                let oldP = item.old ? `<span class="old-price">S/ ${item.old}</span>` : '';
+                
+                // --- CAMBIO AQUÍ: Filtro para Evolutivas ---
+                let funcionClick = `abrirModal('${item.nom}', '${item.pre}')`;
+                if(cat === 'evolutivas') {
+                    funcionClick = `pedirEvolutivaWS('${item.nom}', '${item.pre}')`;
+                }
+
+                grid.innerHTML += `
+                    <div class="product-card" onclick="${funcionClick}">
+                        ${badge}
+                        <div class="img-box"><img src="img/${item.f}/${item.p}${item.id}.webp" onerror="this.src='img/${item.f}/${item.p}${item.id}.jpeg';"></div>
+                        <div class="product-info">
+                            <h3 class="product-name">${item.nom}</h3>
+                            <div class="product-price-box">${oldP}<p class="current-price">S/ ${item.pre}</p></div>
+                        </div>
+                        <button class="btn-comprar">COMPRAR</button>
+                    </div>`; 
+            }); 
+        }
+        window.verificarIdPagostore = async function(event) {
+
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    const idInput = document.getElementById("player-id").value.trim();
+    const btnVerificar = document.getElementById("btn-verificar-id");
+    const nickInput = document.getElementById("player-nick");
+    const btnSiguiente = document.getElementById("btn-datos-siguiente");
+
+    if (!idInput) {
+        alert("¡Ingresa un ID válido!");
+        return false;
+    }
+
+    btnVerificar.innerText = "BUSCANDO...";
+    btnVerificar.disabled = true;
+    nickInput.value = "Consultando jugador...";
+
+    try {
+
+        // 👇 AQUÍ CONSULTAMOS TU API LOCAL
+        const respuesta = await fetch(`http://localhost:3000/verificar/${idInput}`);
+
+        const datos = await respuesta.json();
+
+        console.log(datos);
+
+        if (datos.status === "success") {
+
+            // 👇 MOSTRAR NICK REAL
+            nickInput.value = datos.nickname;
+
+            nickInput.classList.remove("text-gray-400");
+            nickInput.classList.add("text-[#a3e635]");
+
+            btnSiguiente.classList.remove("btn-pago-disabled");
+
+            btnVerificar.innerText = "✅ VERIFICADO";
+            btnVerificar.disabled = false;
+
+            btnVerificar.classList.remove("bg-blue-600");
+            btnVerificar.classList.add("bg-green-600");
+
+        } else {
+
+            nickInput.value = "ID NO ENCONTRADO";
+
+            btnVerificar.innerText = "REINTENTAR";
+            btnVerificar.disabled = false;
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        nickInput.value = "ERROR DE CONEXIÓN";
+
+        btnVerificar.innerText = "ERROR";
+        btnVerificar.disabled = false;
+    }
+
+    return false;
+};
+        // 📦 FUNCIÓN SAGRADA PARA ABRIR EL MODAL (Mantenida intacta para que reaccione al clic)
+        function abrirModal(n, p) { 
+            itemActual = n; 
+            precioActual = p; 
+            
+            // Limpiamos los inputs y bloqueamos el botón siguiente hasta nueva verificación
+            document.getElementById("player-id").value = "";
+            const nickInput = document.getElementById("player-nick");
+            nickInput.value = "";
+            nickInput.classList.remove("text-[#a3e635]");
+            nickInput.classList.add("text-gray-400");
+            
+            const btnVerificar = document.getElementById("btn-verificar-id");
+            btnVerificar.innerText = "🔍 Verificar ID";
+            btnVerificar.classList.remove("bg-green-600");
+            btnVerificar.classList.add("bg-blue-600");
+            
+            document.getElementById("btn-datos-siguiente").classList.add("btn-pago-disabled");
+            
+            document.getElementById('modal-datos').style.display = 'flex'; 
+        }
+        function cerrarModales() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+        window.pedirEvolutivaWS = function(nombre, precio) {
+            const mensaje = `*RIVEN FLAW STORE*\n🛠️ SECCIÓN: CAJAS EVOLUTIVAS\n📦 PRODUCTO: ${nombre}\n💰 PRECIO: S/ ${precio}\n\nHola, deseo comprar estas cajas. Adjunto mi link de amistad para el envío:`;
+            window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(mensaje)}`;
+        };
+        draw('diamantes'); draw('pases'); draw('membresias'); draw('evolutivas');
+
+        const nombres = ["Carlos R.", "Doris M.", "Kevin S.", "Marco L.", "Jefferson A."];
+        const acciones = ["compró 520 Diamantes ✅", "recargó S/ 20.00 ✅", "activó Pase Booyah ✅"];
+        function generateSales() {
+            const track = document.getElementById('dynamic-sales-track');
+            let content = "";
+            for (let i = 0; i < 20; i++) {
+                content += `<span>🚀 ${nombres[Math.floor(Math.random() * 5)]} ${acciones[Math.floor(Math.random() * 3)]}</span>`;
+            }
+            track.innerHTML = content + content;
+        }
+        generateSales();
+    </script>
+</body>
+</html>
