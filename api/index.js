@@ -25,7 +25,7 @@ async function consultarNick(idJugador) {
     'Referer': 'https://gameton.net/',
     'Origin': 'https://gameton.net',
     'User-Agent': 'Mozilla/5.0',
-    'Token': 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImM5YTBjMWRlYWEyN2JjNjMyNTUzYmM4MWEyMmQ4NzY1MWM3MTMyY2IiLCJ0eXAiOiJKV1QifQ.eyJ1cEF0IjoxNzc5MzEyODI5LCJyb2xlIjoxMCwiY3VzdG9tX2VtYWlsIjoiIiwicHJvdmlkZXJfaWQiOiJhbm9ueW1vdXMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZ2FtZWNhc2VsYSIsImF1ZCI6ImdhbWVjYXNlbGEiLCJhdXRoX3RpbWUiOjE3NzkzMTI4MjcsInVzZXJfaWQiOiJEdVd1VXJPVWNPUHNrNzY0b3ZaVkpFbmx6YjMyIiwic3ViIjoiRHVXdVVyT1VjT1Bzazc2NG92WlZKRW5semIzMiIsImlhdCI6MTc3OTY4NjUzOSwiZXhwIjoxNzc5NjkwMTM5LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.mjyySCcPQ7rLnI7OfeygGc5J9xeeYWCo53XwigJUJkbasidSibOBBM8M1OZ1c6VEaVP4NmzlxYjqf9R1GwZCf11MxNgyKMmnzvH6j_5OfiSZ8tSdA8gzoJMHyFZlm9AAl0PO4BHGvDdvdOr6NLtY8ogXcUwssQqTMabAy-4_nKgqBQJgJH0xMxUJ8lZkDZfdBTCEYhtBI5Wb8rF9t6yBqfWPHkuINuck5Z6Kl6pryztzTNz16SHlZapmSTC1oTnVHmn_H9bmK1_GNEwebEwzQ8QEGQkgbY0-nxfOTsIRR7j6WoqwcHH4ArSU5EHOVxu75ONa4sGMPvAd8nuChSHwcQ'
+    'Token': process.env.GAMETON_TOKEN
 },
 
                 body: JSON.stringify({
