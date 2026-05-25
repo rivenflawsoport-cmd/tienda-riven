@@ -11,7 +11,7 @@ async function renovarTokenAutomatico() {
         console.log("🔄 Renovando token automáticamente...");
 
         const response = await fetch(
-            "https://securetoken.googleapis.com/v1/token?key=AIzaSyAuySk-2VXIkK1UFMmn3CHyCGbVkEXdoFE",
+            "https://securetoken.googleapis.com/v1/token?key=AIzaSyAfRMldBEKA60sx6gTnJJTV5qo5TG8megk",
             {
                 method: "POST",
                 headers: {
