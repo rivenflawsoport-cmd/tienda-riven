@@ -40,10 +40,13 @@ async function consultarNick(idJugador) {
 
         const texto = await response.text();
 
-        console.log("📨 RESPUESTA:");
-        console.log(texto);
+        console.log("📨 RESPUESTA CRUDA:");
+console.log(texto);
 
-        const data = JSON.parse(texto);
+const data = JSON.parse(texto);
+
+console.log("📦 JSON:");
+console.log(data);
 
         if (data.userName) {
 
