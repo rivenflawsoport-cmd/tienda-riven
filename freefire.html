@@ -264,14 +264,7 @@
             
             <div class="flex flex-col gap-2 mb-2">
                 <input type="text" id="player-id" placeholder="ID DEL JUGADOR" class="w-full p-3 bg-black border border-gray-700 rounded-lg text-center text-white font-bold outline-none uppercase tracking-wider">
-                <button type="button" id="btn-verificar-id" onclick="window.verificarIdPagostore()" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg font-black text-xs uppercase tracking-widest transition shadow-lg">
-                    🔍 Verificar ID
-                </button>
-            </div>
 
-            <div class="mb-2 text-left">
-                <label class="text-[9px] text-gray-500 font-bold uppercase pl-1">Nick detectado automáticamente:</label>
-                <input type="text" id="player-nick" placeholder="Esperando Verificación..." readonly class="w-full p-3 bg-zinc-900 border border-zinc-800 rounded-lg text-center text-gray-400 font-extrabold outline-none uppercase cursor-not-allowed">
             </div>
 
             <input type="text" id="guest-code" placeholder="CÓDIGO DE INVITADO (OPCIONAL)" class="w-full p-3 bg-black border border-gray-700 rounded-lg mb-4 text-center text-[#a3e635] font-bold outline-none uppercase tracking-wider">
@@ -358,31 +351,34 @@
         };
 
         window.irAPagar = function() {
-            const pId = document.getElementById("player-id").value;
-            const pNick = document.getElementById("player-nick").value;
 
-            if(!pId || !pNick) { 
-                alert("¡Faltan datos! Ingresa ID y Nick."); 
-                return; 
-            }
+    const pId = document.getElementById("player-id").value;
 
-            document.getElementById('check-terminos').checked = false;
-            window.toggleTerminos();
+    if (!pId) {
+        alert("¡Ingresa un ID!");
+        return;
+    }
 
-            let final = parseFloat(precioActual);
-            if (window.cuponUsuario > 0) {
-                final = final - (final * (window.cuponUsuario / 100));
-                document.getElementById('porcentaje-desc').innerText = window.cuponUsuario;
-                document.getElementById('info-descuento').classList.remove('hidden');
-            }
+    document.getElementById('check-terminos').checked = false;
+    window.toggleTerminos();
 
-            document.getElementById('pago-monto').innerText = final.toFixed(2);
-            window.montoFinalDesc = final; 
+    let final = parseFloat(precioActual);
 
-            if(auth.currentUser) document.getElementById('seccion-metodo-saldo').classList.remove('hidden');
-            document.getElementById('modal-datos').style.display = 'none';
-            document.getElementById('modal-pago').style.display = 'flex';
-        };
+    if (window.cuponUsuario > 0) {
+        final = final - (final * (window.cuponUsuario / 100));
+        document.getElementById('porcentaje-desc').innerText = window.cuponUsuario;
+        document.getElementById('info-descuento').classList.remove('hidden');
+    }
+
+    document.getElementById('pago-monto').innerText = final.toFixed(2);
+    window.montoFinalDesc = final;
+
+    if(auth.currentUser)
+        document.getElementById('seccion-metodo-saldo').classList.remove('hidden');
+
+    document.getElementById('modal-datos').style.display = 'none';
+    document.getElementById('modal-pago').style.display = 'flex';
+};
 
         window.intentarPagarConSaldo = async function() {
             if(bloqueoActivo) return;
@@ -400,14 +396,12 @@
                 btnSaldo.classList.add("btn-pago-disabled");
 
                 const pId = document.getElementById("player-id").value;
-                const pNick = document.getElementById("player-nick").value.toUpperCase();
                 const gCode = document.getElementById("guest-code").value.trim().toUpperCase() || "NINGUNO";
                 const nuevoPedidoRef = doc(collection(db, "pedidos"));
 
                 // 1. REGISTRO PARA EL ADMIN (Usando 'monto' para puntos)
                 await setDoc(nuevoPedidoRef, {
                     player_id: pId,
-                    player_nick: pNick,
                     producto: "FREE FIRE (SALDO): " + itemActual,
                     monto: window.montoFinalDesc, 
                     estado: "pendiente",
@@ -439,13 +433,11 @@
 
         window.finalizarCompra = async function() {
             const pId = document.getElementById("player-id").value;
-            const pNick = document.getElementById("player-nick").value.toUpperCase();
             const gCode = document.getElementById("guest-code").value.trim().toUpperCase() || "NINGUNO";
             try {
                 const nuevoPedidoRef = doc(collection(db, "pedidos"));
                 await setDoc(nuevoPedidoRef, {
                     player_id: pId,
-                    player_nick: pNick,
                     producto: "FREE FIRE: " + itemActual,
                     monto: window.montoFinalDesc,
                     estado: "pendiente",
@@ -458,7 +450,7 @@
                 });
             } catch (error) { console.error(error); }
 
-            const msg = `*RIVEN FLAW STORE*\n🎮 JUEGO: FREE FIRE\n💎 PRODUCTO: ${itemActual}\n⚡ ID: ${pId}\n👤 NICK: ${pNick}\n👥 INVITADO: ${gCode}\n💰 PAGO: S/ ${window.montoFinalDesc.toFixed(2)}`;
+            const msg = `*RIVEN FLAW STORE*\n🎮 JUEGO: FREE FIRE\n💎 PRODUCTO: ${itemActual}\n⚡ ID: ${pId}\n👥 INVITADO: ${gCode}\n💰 PAGO: S/ ${window.montoFinalDesc.toFixed(2)}`;
             window.location.href = `https://wa.me/51940511991?text=${encodeURIComponent(msg)}`;
         };
     </script>
@@ -522,72 +514,6 @@
                     </div>`; 
             }); 
         }
-        window.verificarIdPagostore = async function(event) {
-
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-
-    const idInput = document.getElementById("player-id").value.trim();
-    const btnVerificar = document.getElementById("btn-verificar-id");
-    const nickInput = document.getElementById("player-nick");
-    const btnSiguiente = document.getElementById("btn-datos-siguiente");
-
-    if (!idInput) {
-        alert("¡Ingresa un ID válido!");
-        return false;
-    }
-
-    btnVerificar.innerText = "BUSCANDO...";
-    btnVerificar.disabled = true;
-    nickInput.value = "Consultando jugador...";
-
-    try {
-
-        // 👇 AQUÍ CONSULTAMOS TU API LOCAL
-        const respuesta = await fetch(`https://tienda-riven-1.onrender.com/verificar/${idInput}`);
-
-        const datos = await respuesta.json();
-
-        console.log(datos);
-
-        if (datos.status === "success") {
-
-            // 👇 MOSTRAR NICK REAL
-            nickInput.value = datos.nickname;
-
-            nickInput.classList.remove("text-gray-400");
-            nickInput.classList.add("text-[#a3e635]");
-
-            btnSiguiente.classList.remove("btn-pago-disabled");
-
-            btnVerificar.innerText = "✅ VERIFICADO";
-            btnVerificar.disabled = false;
-
-            btnVerificar.classList.remove("bg-blue-600");
-            btnVerificar.classList.add("bg-green-600");
-
-        } else {
-
-            nickInput.value = "ID NO ENCONTRADO";
-
-            btnVerificar.innerText = "REINTENTAR";
-            btnVerificar.disabled = false;
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        nickInput.value = "ERROR DE CONEXIÓN";
-
-        btnVerificar.innerText = "ERROR";
-        btnVerificar.disabled = false;
-    }
-
-    return false;
-};
         // 📦 FUNCIÓN SAGRADA PARA ABRIR EL MODAL (Mantenida intacta para que reaccione al clic)
         function abrirModal(n, p) { 
             itemActual = n; 
@@ -595,17 +521,8 @@
             
             // Limpiamos los inputs y bloqueamos el botón siguiente hasta nueva verificación
             document.getElementById("player-id").value = "";
-            const nickInput = document.getElementById("player-nick");
-            nickInput.value = "";
-            nickInput.classList.remove("text-[#a3e635]");
-            nickInput.classList.add("text-gray-400");
             
-            const btnVerificar = document.getElementById("btn-verificar-id");
-            btnVerificar.innerText = "🔍 Verificar ID";
-            btnVerificar.classList.remove("bg-green-600");
-            btnVerificar.classList.add("bg-blue-600");
-            
-            document.getElementById("btn-datos-siguiente").classList.add("btn-pago-disabled");
+            document.getElementById("btn-datos-siguiente").classList.remove("btn-pago-disabled");
             
             document.getElementById('modal-datos').style.display = 'flex'; 
         }

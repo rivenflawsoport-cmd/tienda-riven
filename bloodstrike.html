@@ -35,7 +35,38 @@
         
         .left-col { width: 350px; flex-shrink: 0; }
         .right-col { flex: 1; min-width: 320px; }
-        @media (max-width: 1024px) { .left-col { width: 100%; } }
+        @media (max-width: 1024px) {
+
+    .main-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .left-col {
+        width: 100%;
+    }
+
+    .right-col {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .selector-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 480px) {
+
+    .selector-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .price-big {
+        font-size: 32px;
+    }
+
+}
 
         .game-card-main { border-radius: 20px; border: 1px solid #222; overflow: hidden; background: #0a0a0a; }
         .game-card-main img { width: 100%; height: auto; display: block; }
